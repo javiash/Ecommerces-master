@@ -1,15 +1,15 @@
 const S = require('sequelize');
 
 const db = require('../configure/db');
-const Book = require('./book');
-
+const Books = require('./book')
+;
 const Shopcart = db.define('shopcart', {
   quantity: {
     type: S.STRING,
-    alloNull: false,
-  },
+    alloNull: false
+  }
 });
 
-Shopcart.belongsToMany(Book, { through: 'shopBooks' });
+Shopcart.belongsToMany(Books, { through: 'shopBooks' });
 
 module.exports = Shopcart;

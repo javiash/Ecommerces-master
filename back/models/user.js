@@ -7,9 +7,12 @@ const Shopcart = require('./shopcart');
 const Purchase = require('./purchase');
 
 const Users = db.define('users', {
-  userName: {
+  email: {
     type: S.STRING,
     allowNull: false,
+    validate: {
+      isEmail: true,
+    },
   },
   password: {
     type: S.STRING,
@@ -18,13 +21,7 @@ const Users = db.define('users', {
   salt: {
     type: S.STRING,
   },
-  email: {
-    type: S.STRING,
-    allowNull: false,
-    validate: {
-      isEmail: true,
-    },
-  },
+
   address: {
     type: S.TEXT,
   },
@@ -43,7 +40,7 @@ Users.prototype.hashPassword = function hashPassword(password) {
   return crypto.createHmac('sha1', this.salt).update(password).digest('hex');
 };
 
-Users.prototype.verifyPassword = function verifyPassword(password) {
+Users.prototype.checkPassword = function checkPassword(password) {
   return this.password === this.hashPassword(password);
 };
 

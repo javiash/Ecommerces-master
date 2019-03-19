@@ -5,12 +5,12 @@ const db = require('../configure/db');
 const Purchase = db.define('purchase', {
   amount: {
     type: S.INTEGER,
-    alloNull: false
+    alloNull: false,
   },
   status: {
     type: S.STRING,
-    allowNull: false
-  }
+    allowNull: false,
+  },
 });
 
 module.exports = Purchase;

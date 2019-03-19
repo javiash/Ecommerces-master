@@ -7,40 +7,40 @@ const Purchase = require('./purchase');
 const Book = db.define('books', {
   name: {
     type: S.STRING,
-    alloNull: false
+    alloNull: false,
   },
   author: {
     type: S.STRING,
-    alloNull: false
+    alloNull: false,
   },
   year: {
     type: S.STRING,
-    alloNull: false
+    alloNull: false,
   },
   editorial: {
     type: S.STRING,
-    alloNull: false
+    alloNull: false,
   },
   description: {
     type: S.TEXT,
-    alloNull: false
+    alloNull: false,
   },
   sold: {
     type: S.INTEGER,
-    alloNull: false
+    alloNull: false,
   },
   price: {
     type: S.DOUBLE,
-    alloNull: false
+    alloNull: false,
   },
   stock: {
     type: S.INTEGER,
-    alloNull: false
-  }
+    alloNull: false,
+  },
 });
 
-Book.belongsToMany(Category, { through: 'bookCategories'});
-Category.belongsToMany(Book, { through: 'bookCategories'});
+Book.belongsToMany(Category, { through: 'bookCategories' });
+Category.belongsToMany(Book, { through: 'bookCategories' });
 
 Book.belongsToMany(Purchase, { through: 'bookPurchase' });
 Book.hasMany(Comments, { foreignKey: 'id' });

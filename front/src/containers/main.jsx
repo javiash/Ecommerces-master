@@ -19,15 +19,6 @@ class Main extends React.Component {
   render() {
     return (
       <div>
-        <section>
-          <Header />
-          {console.log(this.props)}
-          <SearchBarContainer />
-        </section>
-        <Switch>
-          <Route path="/home" render={() => <Home />} />
-          <Route path="/log" render={() => <Log />} />
-          <Route path="/search" render={() => <SearchContainer />} />
           <Route path="/book" render={() => <ABookContainer />} />
           <Redirect from="/" to="/home" />
         </Switch>

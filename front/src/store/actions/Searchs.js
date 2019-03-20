@@ -14,7 +14,7 @@ const setSearchs = searchs => ({
 // pedidos al server
 export const fetchSearchs = () => dispatch =>
   axios
-    .get("/searchs")
+    .get("/Search")
     .then(res => res.data)
     .then(albums => dispatch(setSearchs(albums)));
 

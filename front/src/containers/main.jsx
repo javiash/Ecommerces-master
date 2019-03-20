@@ -8,12 +8,22 @@ import Log from './log';
 import Header from '../components/Header';
 import SearchBarContainer from './SearchBarContainer';
 import SearchContainer from './SearchContainer';
-import { fetchLogin } from '../store/actions/actions';
+import { fetchLogin, fetchShopcart, setCart } from '../store/actions/actions';
 import ABookContainer from './aBookcontainer';
 
 class Main extends React.Component {
+
   componentDidMount() {
-    this.props.fetchLogin();
+    this.props.fetchLogin()
+      .then(() => {
+        if (this.props.isLogin) {
+          console.log('busco')
+          this.props.fetchShopcart(this.props.isLogin.id)
+        } else {
+          let local = localStorage.getItem("Carrito")
+          this.props.setCart(local)
+        }
+      })
   }
 
   render() {
@@ -45,6 +55,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     fetchLogin: () => dispatch(fetchLogin()),
+    fetchShopcart: (id) => dispatch(fetchShopcart(id)),
+    setCart: () => dispatch(setCart()),
   };
 }
 

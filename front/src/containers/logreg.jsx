@@ -8,7 +8,7 @@ import {
 import { connect } from 'react-redux';
 import axios from 'axios';
 import {
-  setShowModal, setHideModal, fetchLogin, fetchUser,
+  setShowModal, setHideModal, fetchLogin, fetchUser, setCart, fetchShopcart,
 } from '../store/actions/actions';
 
 
@@ -25,14 +25,13 @@ class LogReg extends React.Component {
     e.preventDefault();
     const email = this.inputLoginEmail.value;
     const password = this.inputLoginPass.value;
-    axios.post('/auth/login', {
-      email,
-      password,
-    })
+    console.log('pass', password)
+    this.props.fetchUser(email, password)
       .then((user) => {
-        this.props.fetchUser(user.data);
+        console.log(user)
+        this.props.fetchShopcart(user.id)
         this.props.setHideModal();
-      });
+      })
   }
 
   handleRegister(e) {
@@ -43,10 +42,18 @@ class LogReg extends React.Component {
       email,
       password,
     })
-      .then((status) => {
-        if (status.data === 'no') {
+      .then((newUser) => {
+        const email = this.inputEmail.value;
+        const password = this.inputPass.value;
+        if (newUser.data === 'no') {
           this.setState({ usedEmail: true });
         }
+
+        this.props.fetchUser(email, password)
+        .then(
+          this.props.setDBCart(),
+          this.props.setHideModal()
+        )
       });
   }
 
@@ -124,7 +131,9 @@ function mapDispatchToProps(dispatch) {
     setShowModal: () => dispatch(setShowModal()),
     setHideModal: () => dispatch(setHideModal()),
     fetchLogin: user => dispatch(fetchLogin(user)),
-    fetchUser: user => dispatch(fetchUser(user)),
+    fetchShopcart: (id) => dispatch(fetchShopcart(id)),
+    fetchUser: (email, password) => dispatch(fetchUser(email, password)),
+    setCart: (cart) =>dispatch(setCart(cart)),
   };
 }
 

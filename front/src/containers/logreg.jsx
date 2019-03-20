@@ -8,7 +8,9 @@ import {
 import { connect } from 'react-redux';
 import axios from 'axios';
 import {
-  setShowModal, setHideModal, fetchLogin, fetchUser, setCart, fetchShopcart,
+  setShowModal, setHideModal, fetchLogin,
+  fetchUser, setCart, fetchShopcart,
+  setDBCart,
 } from '../store/actions/actions';
 
 
@@ -132,6 +134,7 @@ function mapDispatchToProps(dispatch) {
     setHideModal: () => dispatch(setHideModal()),
     fetchLogin: user => dispatch(fetchLogin(user)),
     fetchShopcart: (id) => dispatch(fetchShopcart(id)),
+    setDBCart: () => dispatch(setDBCart()),
     fetchUser: (email, password) => dispatch(fetchUser(email, password)),
     setCart: (cart) =>dispatch(setCart(cart)),
   };

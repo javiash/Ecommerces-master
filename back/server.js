@@ -25,7 +25,7 @@ app.use(express.static(`${__dirname}/public`));
 app.use(passport.initialize()); // passport configuration & session connection
 app.use(passport.session());
 
-app.use("/Search", Search);
+app.use("/SearchBook", Search);
 app.use("/auth", authRoutes);
 
 app.get("/*", (req, res) => {

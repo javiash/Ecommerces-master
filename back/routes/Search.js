@@ -4,9 +4,9 @@ const Books = require("../models/book");
 
 module.exports = router;
 
-router.get('/', (req, res) => {
-  console.log("holaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
- Books.findAll().then(books=>{
-   res.send(books)
- });
+router.get("/", (req, res) => {
+  console.log("holaaaaaaaaaaaaaaaaaaaaaaaaaaaa",req.body);
+  Books.findAll().then(books => {
+    res.send(books);
+  });
 });

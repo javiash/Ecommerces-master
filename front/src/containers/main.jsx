@@ -6,15 +6,27 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Home from '../components/home';
 import Log from './log';
 import Header from '../components/Header';
+import Search from '../components/Search';
 import SearchBarContainer from './SearchBarContainer';
-import SearchContainer from './SearchContainer';
-import { fetchLogin } from '../store/actions/actions';
+import { fetchLogin, fetchShopcart, setCart } from '../store/actions/actions';
 import ABookContainer from './aBookcontainer';
 import Profile from './profile';
 
 class Main extends React.Component {
+
   componentDidMount() {
-    this.props.fetchLogin();
+    this.props.fetchLogin()
+      .then(() => {
+        if (this.props.isLogin) {
+          console.log('busco');
+          this.props.fetchShopcart(this.props.isLogin.id)
+        } else {
+          const local = localStorage.getItem('Carrito')
+          if (local) {
+            this.props.setCart(local);
+          }
+        }
+      });
   }
 
   render() {
@@ -22,16 +34,15 @@ class Main extends React.Component {
       <div>
         <section>
           <Header />
-          {console.log(this.props)}
           <SearchBarContainer />
         </section>
         <Switch>
           <Route path="/home" render={() => <Home />} />
           <Route path="/log" render={() => <Log />} />
-          <Route path="/search" render={() => <SearchContainer />} />
+          <Route path="/search" render={() => <Search />} />
           <Route path="/book" render={() => <ABookContainer />} />
           <Route path="/profile" render={() => <Profile />} />
-          <Redirect from="/" to="/profile" />
+          <Redirect from="/" to="/home" />
         </Switch>
       </div>
     );
@@ -47,7 +58,12 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     fetchLogin: () => dispatch(fetchLogin()),
+    fetchShopcart: id => dispatch(fetchShopcart(id)),
+    setCart: () => dispatch(setCart()),
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Main);

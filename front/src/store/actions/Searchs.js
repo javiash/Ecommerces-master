@@ -14,12 +14,13 @@ const setSearchs = searchs => ({
 // pedidos al server
 export const fetchSearchs = () => dispatch =>
   axios
-    .get("/searchs")
+    .get("/SearchBook")
     .then(res => res.data)
-    .then(albums => dispatch(setSearchs(albums)));
+    .then(books => console.log(books, 'estoy en el action'))
+    .then(books => dispatch(setSearchs(books)));
 
 export const fetchSearch = id => dispatch =>
   axios
-    .get(`/searchs/${id}`)
+    .get(`/search/${id}`)
     .then(res => res.data)
-    .then(album => dispatch(setSearch(album)));
+    .then(book=> dispatch(setSearch(book)));

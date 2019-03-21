@@ -41,24 +41,18 @@ export default () => {
       <nav className="pagination item " aria-label="Page navigation example">
         <ul className="pagination">
           <li className="page-item">
-            <Link to="/">
-              <a className="page-link" aria-label="Previous">
+            <Link to="/" className="page-link" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
                 <span className="sr-only">Previous</span>
-              </a>
             </Link>
           </li>
           <li className="page-item">
-            <Link to="/">
-              <a className="page-link">1</a>
-            </Link>
+            <Link to="/" className="page-link">1</Link>
           </li>
           <li className="page-item">
-            <Link to="/">
-              <a className="page-link" aria-label="Next">
+            <Link to="/" className="page-link" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
                 <span className="sr-only">Next</span>
-              </a>
             </Link>
           </li>
         </ul>

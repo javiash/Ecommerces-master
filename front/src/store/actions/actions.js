@@ -40,7 +40,7 @@ export const fetchLogin = () => dispatch => Axios.get('/auth/me')
       dispatch(setLogin(res.data));
     }
   });
-
+ 
 //Cart----------------
 
 export const setCart = function setCart(cart) {

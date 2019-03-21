@@ -29,14 +29,11 @@ export default props => {
         <Nav className="mr-auto">
           <NavDropdown title="categories" id="basic-nav-dropdown">
             {test.map(items => (
-              <div key={items.name}>
-                <Nav.Link >{items.name}</Nav.Link>
-              </div>
+                <Nav.Link key={items.name}>{items.name}</Nav.Link>
             ))}
           </NavDropdown>
         </Nav>
-        <form onSubmit={props.handleSubmit}>
-          <Form inline>
+          <Form inline onSubmit={props.handleSubmit}>
             <FormControl
               size="sm"
               value={props.SearchBarQuery}
@@ -50,7 +47,6 @@ export default props => {
               Search
             </Button>
           </Form>
-        </form>
       </Navbar.Collapse>
     </Navbar>
   );

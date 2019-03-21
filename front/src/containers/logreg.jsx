@@ -48,13 +48,14 @@ class LogReg extends React.Component {
         const email = this.inputEmail.value;
         const password = this.inputPass.value;
         if (newUser.data === 'no') {
-          this.setState({ usedEmail: true });
+          return this.setState({ usedEmail: true });
         }
 
         this.props.fetchUser(email, password)
-        .then(
-          this.props.setDBCart(),
-          this.props.setHideModal()
+        .then((user) =>{
+          console.log(user)
+          this.props.setDBCart(user.id),
+          this.props.setHideModal()}
         )
       });
   }

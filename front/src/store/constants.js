@@ -10,3 +10,4 @@ export const SET_SEARCHS = "SET_SEARCHS";
 
 //Carrito
 export const SET_CART = 'SET_CART';
+export const ADD_CART = 'ADD_CART';

@@ -10,7 +10,7 @@ import {
 } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import Axios from 'axios';
-import { setShowModal, fetchLogin, fetchUser } from '../store/actions/actions';
+import { setShowModal, fetchLogin, fetchUser, setLogin } from '../store/actions/actions';
 import LogReg from '../containers/logreg';
 
 
@@ -20,7 +20,7 @@ class Header extends React.Component {
       res.send('logout');
     })
       .then(() => {
-        this.props.fetchUser(null);
+        this.props.setLogin(null);
       });
   }
 
@@ -84,6 +84,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     setShowModal: () => dispatch(setShowModal()),
+    setLogin: () => dispatch(setLogin()),
     fetchLogin: user => dispatch(fetchLogin(user)),
     fetchUser: user => dispatch(fetchUser(user)),
   };

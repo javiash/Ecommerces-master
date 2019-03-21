@@ -21,7 +21,9 @@ class Main extends React.Component {
           this.props.fetchShopcart(this.props.isLogin.id)
         } else {
           let local = localStorage.getItem("Carrito")
-          this.props.setCart(local)
+          if (local) {
+            this.props.setCart(local)
+          }
         }
       })
   }

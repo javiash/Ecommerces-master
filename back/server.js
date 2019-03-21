@@ -11,6 +11,7 @@ const cookieParser = require('cookie-parser');
 // Local imports
 const db = require('./configure/db');
 const authRoutes = require('./routes/authRoutes');
+const cartRoutes = require('./routes/cartRoutes');
 
 require('./configure/passport-setup');
 
@@ -29,6 +30,7 @@ app.use(passport.session());
 
 
 app.use('/auth', authRoutes);
+app.use('/cart', cartRoutes);
 
 
 app.get('/*', (req, res) => {

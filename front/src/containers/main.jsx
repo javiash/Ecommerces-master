@@ -10,6 +10,7 @@ import SearchBarContainer from './SearchBarContainer';
 import SearchContainer from './SearchContainer';
 import { fetchLogin } from '../store/actions/actions';
 import ABookContainer from './aBookcontainer';
+import Profile from './profile';
 
 class Main extends React.Component {
   componentDidMount() {
@@ -29,7 +30,8 @@ class Main extends React.Component {
           <Route path="/log" render={() => <Log />} />
           <Route path="/search" render={() => <SearchContainer />} />
           <Route path="/book" render={() => <ABookContainer />} />
-          <Redirect from="/" to="/home" />
+          <Route path="/profile" render={() => <Profile />} />
+          <Redirect from="/" to="/profile" />
         </Switch>
       </div>
     );

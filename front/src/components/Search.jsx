@@ -24,7 +24,7 @@ export default () => {
       </div>
       {test.map(item => {
         return (
-          <div>
+          <div key={item.name}>
             <Card style={{ width: "25rem" }}>
               <Card.Img variant="top" src={item.img} />
               <Card.Body>

@@ -29,8 +29,8 @@ export default props => {
         <Nav className="mr-auto">
           <NavDropdown title="categories" id="basic-nav-dropdown">
             {test.map(items => (
-              <div  key={items.name}>
-                <Nav.Link>{items.name}</Nav.Link>
+              <div key={items.name}>
+                <Nav.Link >{items.name}</Nav.Link>
               </div>
             ))}
           </NavDropdown>

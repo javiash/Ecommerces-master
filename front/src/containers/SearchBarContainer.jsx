@@ -21,8 +21,6 @@ class SearchContainer extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     if (this.state.SearchBarQuery) {
-      console.log('ENTRA AL HANDLE_SUBMIT (FUNCION PADRE)');
-      console.log('THIS.STATE/SearchBarQuery', this.state.SearchBarQuery);
       this.props.fetchSearchs(this.state.SearchBarQuery);
       this.props.history.push(`/search/${this.state.SearchBarQuery}`);
     }
@@ -31,7 +29,6 @@ class SearchContainer extends React.Component {
   render() {
     return (
       <div>
-        {console.log('RENDEREA SEARCHBAR', this.props)}
         <SearchBar
           value={this.props.searchs}
           setSearch={this.handleSearchInput}

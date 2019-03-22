@@ -1,8 +1,5 @@
 const S = require('sequelize');
 const db = require('../configure/db');
-const Category = require('./category');
-const Comments = require('./comments');
-const Purchase = require('./purchase');
 
 const Book = db.define('books', {
   name: {
@@ -38,11 +35,5 @@ const Book = db.define('books', {
     alloNull: false,
   },
 });
-
-Book.belongsToMany(Category, { through: 'bookCategories' });
-Category.belongsToMany(Book, { through: 'bookCategories' });
-
-Book.belongsToMany(Purchase, { through: 'bookPurchase' });
-Book.hasMany(Comments, { foreignKey: 'id' });
 
 module.exports = Book;

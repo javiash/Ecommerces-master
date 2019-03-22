@@ -1,5 +1,4 @@
 const S = require('sequelize');
-const Users = require('./user');
 const db = require('../configure/db');
 
 const Comments = db.define('comment', {
@@ -13,7 +12,5 @@ const Comments = db.define('comment', {
   },
 
 });
-
-// Comments.hasOne(Users, { foreignKey: 'Commentary' });
 
 module.exports = Comments;

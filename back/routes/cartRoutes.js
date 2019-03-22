@@ -18,7 +18,7 @@ router.post('/new', (req, res) => {
 })
 
 router.get('/:id', (req, res) => {
-  Cart.findAll({ where: { id: req.params.id } })
+  Cart.findAll({ where: { ownerId: req.params.id } })
     .then(cart => res.send(cart));
 });
 
@@ -26,5 +26,15 @@ router.get('/:id', (req, res) => {
 router.post('/:id', (req, res) => {
   Cart.findByPk(req.params.id);
 });
+
+router.get('/newcart', (req, res) => {
+  Cart.create({
+    quantity: req.body.quantity,
+  })
+  .then(cart => {
+    cart.setOwner(req.body.owner)
+    res.send('carrito')
+  })
+})
 
 module.exports = router;

@@ -61,11 +61,15 @@ const addCart = function addCart(book) {
 
 export const fetchShopcart = (id) => dispatch => Axios.get(`/cart/${id}`)
   .then((cart) => {
-    if (cart === []) {
-      dispatch(setCart(JSON.parse(localStorage.getItem('Carrito'))))
+    console.log('CART!!!!!!', cart)
+    if (cart.data === []) {
+      const newCart = JSON.parse(localStorage.getItem('Carrito'))
+      console.log('LOCAL!!!!', newCart)
+       newCart ? dispatch(setCart(newCart)) : dispatch(setCart([]));
+    }else {
+      dispatch(setCart(cart.data))
     }
-    dispatch(setCart(cart));
-  });
+  })
 
 export const setDBCart = id => dispatch => Axios.get(`/cart/${id}`, (req, res) => {
   res.send(getState().cart);

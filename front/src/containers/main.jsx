@@ -17,8 +17,7 @@ class Main extends React.Component {
     this.props.fetchLogin()
       .then(() => {
         if (this.props.isLogin) {
-          console.log('busco');
-          this.props.fetchShopcart(this.props.isLogin.id);
+          this.props.fetchShopcart(this.props.isLogin.id)
         } else {
           const local = JSON.parse(localStorage.getItem('Carrito'))
           if (local) {

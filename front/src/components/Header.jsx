@@ -60,7 +60,7 @@ class Header extends React.Component {
       <Navbar bg="dark" expand="lg">
         <Navbar.Brand className="mr-auto">
           <Link to="/">
-            <img width="150px" src="./Images/BookStore.png" alt="" />
+            <img width="150px" src="/Images/BookStore.png" alt="" />
           </Link>
         </Navbar.Brand>
         <div>
@@ -84,7 +84,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     setShowModal: () => dispatch(setShowModal()),
-    setLogin: () => dispatch(setLogin()),
+    setLogin: (user) => dispatch(setLogin(user)),
     fetchLogin: user => dispatch(fetchLogin(user)),
     fetchUser: user => dispatch(fetchUser(user)),
   };

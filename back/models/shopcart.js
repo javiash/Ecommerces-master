@@ -4,7 +4,7 @@ const db = require('../configure/db');
 
 const Shopcart = db.define('shopcart', {
   quantity: {
-    type: S.STRING,
+    type: S.INTEGER,
     alloNull: false,
   },
 });

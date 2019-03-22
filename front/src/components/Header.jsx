@@ -29,8 +29,8 @@ class Header extends React.Component {
   }
 
   render() {
-    if(this.props.isLogin != null){
-       name = this.props.isLogin.email
+    if(this.props.isLogin != null) {
+      name = this.props.isLogin.email;
     }
     const userLogin = (
       <ButtonGroup>

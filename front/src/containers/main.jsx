@@ -13,15 +13,15 @@ import ABookContainer from './aBookcontainer';
 import Profile from './profile';
 
 class Main extends React.Component {
-
   componentDidMount() {
     this.props.fetchLogin()
       .then(() => {
         if (this.props.isLogin) {
+          // eslint-disable-next-line no-console
           console.log('busco');
-          this.props.fetchShopcart(this.props.isLogin.id)
+          this.props.fetchShopcart(this.props.isLogin.id);
         } else {
-          const local = localStorage.getItem('Carrito')
+          const local = localStorage.getItem('Carrito');
           if (local) {
             this.props.setCart(local);
           }

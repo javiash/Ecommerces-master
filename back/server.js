@@ -5,7 +5,7 @@ const morgan = require('morgan');
 const passport = require('passport');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
-const mailer = require('./mailer');
+// const mailer = require('./mailer');
 
 
 const app = express();
@@ -42,15 +42,15 @@ app.get('/*', (req, res) => {
 });
 
 
-mailer(
-  'checkout',
-  {
-    name: 'Javier',
-    mail: 'aenoriss@gmail.com',
-    items: ['El señor de los anillos', 'Cronicas Marcianas', '20.000 Leguas de Viaje Submarino'],
-    subject: 'BookStore Checkout',
-  },
-);
+// mailer(
+//   'checkout',
+//   {
+//     name: 'Javier',
+//     mail: 'aenoriss@gmail.com',
+//     items: ['El señor de los anillos', 'Cronicas Marcianas', '20.000 Leguas de Viaje Submarino'],
+//     subject: 'BookStore Checkout',
+//   },
+// );
 
 
 db.sync({ force: false }).then(() => {

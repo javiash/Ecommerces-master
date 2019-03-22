@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const passport = require('passport');
 const User = require('../models/user');
+const Comments = require('../models/comments')
 
 passport.serializeUser((user, done) => { // serialize: How we save the user
   done(null, user.id);
@@ -57,5 +58,21 @@ router.get('/google', passport.authenticate('google', {
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
   res.redirect('/');
 });
+
+
+
+router.post('/com', (req, res) => {
+  Comments.create({
+    content: 'hola',
+    rating: 4,
+  })
+  .then(comment => {
+    console.log(comment)
+    comment.setFrom(1)
+    comment.setRef(1)
+    res.send('ok')
+  })
+})
+
 
 module.exports = router;

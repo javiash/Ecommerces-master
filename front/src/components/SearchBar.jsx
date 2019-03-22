@@ -23,7 +23,6 @@ export default props => {
   };
   return (
     <Navbar bg="light" expand="lg" width="10px">
-      {console.log(props, "estado del query")}
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">

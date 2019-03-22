@@ -20,7 +20,6 @@ class SearchContainer extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     if (this.state.SearchBarQuery) {
-      console.log('entra al handle search')
       this.props.fetchSearchs(this.state.SearchBarQuery);
       this.props.history.push(`/search/${this.state.SearchBarQuery}`)
     }
@@ -30,7 +29,6 @@ class SearchContainer extends React.Component {
     
     return (
       <div>
-{console.log( "asdsadsadasdsadsa",this.props)}
         <SearchBar
           value={this.props.searchs}
           setSearch={this.handleSearchInput}
@@ -44,7 +42,6 @@ class SearchContainer extends React.Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  console.log(ownProps, 'ownpropdssssss')
   return {
     search: state.searches.search,
     searchs: state.searches.searchs,

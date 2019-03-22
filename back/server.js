@@ -28,8 +28,6 @@ app.use(passport.session());
 
 app.use("/SearchBook", Search);
 app.use("/auth", authRoutes);
-
-app.use('/auth', authRoutes);
 app.use('/cart', cartRoutes);
 
 

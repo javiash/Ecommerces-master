@@ -9,7 +9,6 @@ import {
   Nav,
   Navbar
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
 
 const test = [
   { name: "categoria 1" },
@@ -30,27 +29,26 @@ export default props => {
           <NavDropdown title="categories" id="basic-nav-dropdown">
             {test.map(items => (
               <div key={items.name}>
-                <Nav.Link >{items.name}</Nav.Link>
+                <Nav.Link>{items.name}</Nav.Link>
               </div>
             ))}
           </NavDropdown>
         </Nav>
-        <form onSubmit={props.handleSubmit}>
-          <Form inline>
-            <FormControl
-              size="sm"
-              value={props.SearchBarQuery}
-              onChange={SetChange}
-              style={{ width: "190px" }}
-              type="text"
-              placeholder="Search"
-              className="mr-sm-2"
-            />
-            <Button size="sm" type="submit" variant="outline-success">
-              Search
-            </Button>
-          </Form>
-        </form>
+
+        <Form inline onSubmit={props.handleSubmit}>
+          <FormControl
+            size="sm"
+            value={props.SearchBarQuery}
+            onChange={SetChange}
+            style={{ width: "190px" }}
+            type="text"
+            placeholder="Search"
+            className="mr-sm-2"
+          />
+          <Button size="sm" type="submit" variant="outline-success">
+            Search
+          </Button>
+        </Form>
       </Navbar.Collapse>
     </Navbar>
   );

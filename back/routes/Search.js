@@ -4,9 +4,9 @@ const Books = require("../models/book");
 
 module.exports = router;
 
-router.get("/", (req, res) => {
+router.get("/:name", (req, res) => {
   console.log("holaaaaaaaaaaaaaaaaaaaaaaaaaaaa",req.body);
-  Books.findAll().then(books => {
+  Books.findAll({where:{name:'%'+req.params.name+'%'}}).then(books => {
     res.send(books);
   });
 });

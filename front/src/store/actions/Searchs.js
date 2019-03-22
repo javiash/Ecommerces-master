@@ -12,9 +12,9 @@ const setSearchs = searchs => ({
 });
 
 // pedidos al server
-export const fetchSearchs = () => dispatch =>
+export const fetchSearchs = (book) => dispatch =>
   axios
-    .get("/SearchBook")
+    .get(`/SearchBook/${book}`)
     .then(res => res.data)
     .then(books => console.log(books, 'estoy en el action'))
     .then(books => dispatch(setSearchs(books)));

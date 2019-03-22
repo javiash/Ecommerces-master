@@ -1,8 +1,8 @@
-import { SET_CART, ADD_CART } from '../constants'
+import { SET_CART, ADD_CART } from '../constants';
 
 const initialState = {
-    cart: []
-}
+  cart: [],
+};
 
 export default function (state = initialState, action) {
     switch (action.type) {
@@ -14,5 +14,5 @@ export default function (state = initialState, action) {
         }
         default:
             return state;
-    }
+  }
 }

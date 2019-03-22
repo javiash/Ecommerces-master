@@ -1,36 +1,35 @@
-import React from "react";
-import { Card, Button, ButtonGroup } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Card, Button, ButtonGroup } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+
 const test = [
-  { name: "HarryPotter", content: "libro", img: "/Images/Carusel 1.jpg" },
-  { name: "HarryPotter", content: "asdada", img: "/Images/Carusel 1.jpg" },
-  { name: "HarryPotter", content: "asdada", img: "/Images/Carusel 1.jpg" },
-  { name: "HarryPotter", content: "asdada", img: "/Images/Carusel 1.jpg" },
-  { name: "HarryPotter", content: "asdada", img: "/Images/Carusel 1.jpg" },
-  { name: "HarryPotter", content: "asdada", img: "/Images/Carusel 1.jpg" }
+  { name: 'HarryPotter', content: 'libro', img: '/Images/Carusel 1.jpg' },
+  { name: 'HarryPotter', content: 'asdada', img: '/Images/Carusel 1.jpg' },
+  { name: 'HarryPotter', content: 'asdada', img: '/Images/Carusel 1.jpg' },
+  { name: 'HarryPotter', content: 'asdada', img: '/Images/Carusel 1.jpg' },
+  { name: 'HarryPotter', content: 'asdada', img: '/Images/Carusel 1.jpg' },
+  { name: 'HarryPotter', content: 'asdada', img: '/Images/Carusel 1.jpg' },
 ];
-export default () => {
-  return (
-    <div className="Books">
-      <div className="itemA">
-        <ButtonGroup vertical>
-          <Link to="/searchBooks">
-            <Button>Los Mas Vendidoss</Button>
-          </Link>
-          <Button>Menor Precio</Button>
-          <Button>Mayor Precio</Button>
-          <Button>Año de publicacion</Button>
-        </ButtonGroup>
-      </div>
-      {test.map(item => {
-        return (
-          <div key={item.name}>
-            <Card style={{ width: "25rem" }}>
-              <Card.Img variant="top" src={item.img} />
-              <Card.Body>
-                <Card.Title>{item.name}</Card.Title>
-                <Card.Text>{item.content}</Card.Text>
-                <Link to="/">
+export default () => (
+  <div className="Books">
+    <div className="itemA">
+      <ButtonGroup vertical>
+        <Link to="/searchBooks">
+          <Button>Los Mas Vendidoss</Button>
+        </Link>
+        <Button>Menor Precio</Button>
+        <Button>Mayor Precio</Button>
+        <Button>Año de publicacion</Button>
+      </ButtonGroup>
+    </div>
+    {test.map(item => (
+      <div key={item.name}>
+        <Card style={{ width: '25rem' }}>
+          <Card.Img variant="top" src={item.img} />
+          <Card.Body>
+              <Card.Title>{item.name}</Card.Title>
+              <Card.Text>{item.content}</Card.Text>
+              <Link to="/">
                   <Button variant="secondary">Ir al Libro</Button>
                 </Link>
               </Card.Body>
@@ -54,9 +53,8 @@ export default () => {
                 <span aria-hidden="true">&raquo;</span>
                 <span className="sr-only">Next</span>
             </Link>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  );
-};
+        </li>
+      </ul>
+    </nav>
+  </div>
+);

@@ -13,7 +13,6 @@ import ABookContainer from './aBookcontainer';
 import Profile from './profile';
 
 class Main extends React.Component {
-
   componentDidMount() {
     this.props.fetchLogin()
       .then(() => {

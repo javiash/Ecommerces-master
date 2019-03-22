@@ -1,8 +1,10 @@
 import Axios from 'axios';
-import { SET_SHOWMODAL, SET_HIDEMODAL, SET_LOGIN, SET_CART, ADD_CART } from '../constants';
+import {
+  SET_SHOWMODAL, SET_HIDEMODAL, SET_LOGIN, SET_CART, ADD_CART,
+} from '../constants';
 
 
-//Login-----------------------
+// Login-----------------------
 
 export const setShowModal = function setShowModal() {
   return {
@@ -30,9 +32,9 @@ export const fetchUser = (email, password) => dispatch => Axios.post('/auth/logi
   password,
 })
   .then((user) => {
-    dispatch(setLogin(user.data))
+    dispatch(setLogin(user.data));
     return user.data;
-  })
+  });
 
 export const fetchLogin = () => dispatch => Axios.get('/auth/me')
   .then((res) => {
@@ -41,33 +43,33 @@ export const fetchLogin = () => dispatch => Axios.get('/auth/me')
     }
   });
 
-//Cart----------------
+// Cart----------------
 
 export const setCart = function setCart(cart) {
   return {
     type: SET_CART,
     cart,
-  }
-}
+  };
+};
 
 const addCart = function addCart(book) {
   return {
     type: ADD_CART,
     book,
-  }
-}
+  };
+};
 
 export const fetchShopcart = (id) => dispatch => Axios.get(`/cart/${id}`)
   .then((cart) => {
     if (cart === []) {
       dispatch(setCart(JSON.parse(localStorage.getItem('Carrito'))))
     }
-    dispatch(setCart(cart))
-  })
+    dispatch(setCart(cart));
+  });
 
-export const setDBCart = (id) => dispatch => Axios.get(`/cart/${id}`, (req, res) => {
-  res.send(getState().cart)
-})
+export const setDBCart = id => dispatch => Axios.get(`/cart/${id}`, (req, res) => {
+  res.send(getState().cart);
+});
 
 export const userAddCart = (book, id) => dispatch => Axios.post(`/cart/add/${id}`, book)
   .then((res => {

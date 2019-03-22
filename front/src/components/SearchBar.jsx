@@ -1,24 +1,24 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
-import React from "react";
+import React from 'react';
 import {
   Button,
   FormControl,
   Form,
   NavDropdown,
   Nav,
-  Navbar
-} from "react-bootstrap";
-import { Link } from "react-router-dom";
+  Navbar,
+} from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const test = [
-  { name: "categoria 1" },
-  { name: "categoria 2" },
-  { name: "categoria 3" },
-  { name: "test" }
+  { name: 'categoria 1' },
+  { name: 'categoria 2' },
+  { name: 'categoria 3' },
+  { name: 'categoria 4' },
 ];
-export default props => {
-  const SetChange = e => {
+export default (props) => {
+  const SetChange = (e) => {
     props.setSearch(e.target.value);
   };
   return (
@@ -37,7 +37,7 @@ export default props => {
               size="sm"
               value={props.SearchBarQuery}
               onChange={SetChange}
-              style={{ width: "190px" }}
+              style={{ width: '190px' }}
               type="text"
               placeholder="Search"
               className="mr-sm-2"

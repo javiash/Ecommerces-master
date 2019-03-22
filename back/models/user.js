@@ -3,8 +3,6 @@ const S = require('sequelize');
 const crypto = require('crypto');
 
 const db = require('../configure/db');
-const Shopcart = require('./shopcart');
-const Purchase = require('./purchase');
 
 const Users = db.define('users', {
   email: {
@@ -43,10 +41,5 @@ Users.prototype.hashPassword = function hashPassword(password) {
 Users.prototype.checkPassword = function checkPassword(password) {
   return this.password === this.hashPassword(password);
 };
-
-Users.hasMany(Purchase, { foreignKey: 'id' });
-// Purchase.hasOne(Users, { foreignKey: 'id' });
-
-Users.hasOne(Shopcart, { foreignKey: 'id' });
 
 module.exports = Users;

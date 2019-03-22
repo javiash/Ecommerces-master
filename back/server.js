@@ -11,6 +11,8 @@ const cookieParser = require('cookie-parser');
 // Local imports
 const db = require('./configure/db');
 const authRoutes = require('./routes/authRoutes');
+const Book = require('./models/book');
+const Category = require('./models/category');
 
 require('./configure/passport-setup');
 
@@ -27,6 +29,17 @@ app.use(express.static(`${__dirname}/public`));
 app.use(passport.initialize()); // passport configuration & session connection
 app.use(passport.session());
 
+app.get('/piphole', (req, res) => {
+  console.log('piphole');
+  Book.findOne({
+    where: { id: 1 },
+    include: [Category],
+  })
+    .then((res) => {
+      console.log('CATEGORIA', res.categories);
+    },);
+  res.send('ok');
+});
 
 app.use('/auth', authRoutes);
 

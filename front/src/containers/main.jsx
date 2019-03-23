@@ -28,7 +28,7 @@ class Main extends React.Component {
           <Route path="/home" render={() => <Home />} />
           <Route path="/log" render={() => <Log />} />
           <Route path="/search" render={() => <SearchContainer />} />
-          <Route path="/book" render={() => <ABookContainer />} />
+          <Route path="/book/:id" exact render={({ match }) => <ABookContainer bookId={match} />} />
           <Redirect from="/" to="/home" />
         </Switch>
       </div>
@@ -49,3 +49,5 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
+
+

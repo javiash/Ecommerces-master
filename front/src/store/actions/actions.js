@@ -61,35 +61,43 @@ const addCart = function addCart(book) {
 
 export const fetchShopcart = (id) => dispatch => Axios.get(`/cart/${id}`)
   .then((cart) => {
-    if (cart === []) {
-      dispatch(setCart(JSON.parse(localStorage.getItem('Carrito'))))
+    if (cart.data.length === 0) {
+      const newCart = JSON.parse(localStorage.getItem('Carrito'))
+      newCart ? dispatch(setCart(newCart)) : dispatch(setCart([]));
+    } else {
+      dispatch(setCart(cart.data))
     }
-    dispatch(setCart(cart));
-  });
+  })
 
-export const setDBCart = id => dispatch => Axios.get(`/cart/${id}`, (req, res) => {
-  res.send(getState().cart);
-});
+export const setDBCart = id => (dispatch, getState) => Axios.post(`/cart/new/${id}`, getState().cart.cart)
 
-export const userAddCart = (book, id) => dispatch => Axios.post(`/cart/add/${id}`, book)
+export const userAddCart = (book, id) => (dispatch, getState) => Axios.post(`/cart/add/${id}`, book)
   .then((res => {
     if (res === 'update') {
       const beforeState = getState().cart.cart
-      let newCart = beforeState.map((singleBook) => singleBook.id === book.id ? { ...singleBook, quantity: singleBook.quantity += book.quantity } : singleBook)
+      let newCart = beforeState.map((singleBook) => singleBook.id === book.id ? { ...singleBook, quantity: singleBook.quantity + book.quantity } : singleBook)
       dispatch(setCart(newCart))
     } else if (res === 'add') {
       dispatch(addCart(book))
     }
   }))
 
-export const noUserAddCart = (book) => dispatch => dispatch(addCart(book))
-  .then(localStorage.setItem('Carrito', JSON.stringify(getState().cart)))
+export const noUserAddCart = (book) => (dispatch, getState) => {
+  const beforeAdd = getState().cart.cart
+  if (beforeAdd.some((singleBook) => singleBook.id === book.id)) {
+    let afterAdd = beforeAdd.map((singleBook) => singleBook.id === book.id ? { ...singleBook, quantity: singleBook.quantity + book.quantity } : singleBook)
+    dispatch(setCart(afterAdd))
+  } else {
+    dispatch(addCart(book))
+  }
+  localStorage.setItem('Carrito', JSON.stringify(getState().cart))
+}
 
 
-export const userRemoveCart = (book, id) => dispatch => Axios.post(`/cart/${id}`, book)
+export const userRemoveCart = (book, id) => (dispatch, getState) => Axios.post(`/cart/${id}`, book)
   .then(() => {
     const beforeState = getState().cart.cart
-    let newCart = beforeState.filter(e => e.id != book.id)
+    let newCart = beforeState.filter(singleBook => singleBook.id != book.id)
     dispatch(setCart(newCart))
   }
   )

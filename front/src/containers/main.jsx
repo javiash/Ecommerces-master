@@ -17,8 +17,7 @@ class Main extends React.Component {
     this.props.fetchLogin()
       .then(() => {
         if (this.props.isLogin) {
-          console.log('busco');
-          this.props.fetchShopcart(this.props.isLogin.id);
+          this.props.fetchShopcart(this.props.isLogin.id)
         } else {
           const local = JSON.parse(localStorage.getItem('Carrito'))
           if (local) {
@@ -38,9 +37,11 @@ class Main extends React.Component {
         <Switch>
           <Route path="/home" render={() => <Home />} />
           <Route path="/log" render={() => <Log />} />
+          <Route path="/book/:id" exact render={({ match }) => <ABookContainer bookId={match} />} />
           <Route path="/search" render={() => <Search />} />
           <Route path="/book" render={() => <ABookContainer />} />
           <Route path="/profile" render={() => <Profile />} />
+
           <Redirect from="/" to="/home" />
         </Switch>
       </div>
@@ -66,3 +67,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(Main);
+

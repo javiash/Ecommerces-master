@@ -86,7 +86,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     setShowModal: () => dispatch(setShowModal()),
-    setLogin: () => dispatch(setLogin()),
+    setLogin: (user) => dispatch(setLogin(user)),
     fetchLogin: user => dispatch(fetchLogin(user)),
     fetchUser: user => dispatch(fetchUser(user)),
   };

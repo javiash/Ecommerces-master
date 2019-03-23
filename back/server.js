@@ -27,8 +27,8 @@ app.use(express.static(`${__dirname}/public`));
 app.use(passport.initialize()); // passport configuration & session connection
 app.use(passport.session());
 
-app.use("/SearchBook", Search);
-app.use("/auth", authRoutes);
+app.use('/SearchBook', Search);
+app.use('/auth', authRoutes);
 app.use('/cart', cartRoutes);
 app.get('/*', (req, res) => {
   res.sendFile(`${__dirname}/public/index.html`);
@@ -46,5 +46,4 @@ app.get('/*', (req, res) => {
 
 db.sync({ force: false }).then(() => {
   app.listen(3000, () => console.log('SERVER LISTENING AT PORT 3000'));
-
 });

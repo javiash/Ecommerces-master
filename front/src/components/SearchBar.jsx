@@ -15,7 +15,7 @@ const test = [
   { name: 'categoria 1' },
   { name: 'categoria 2' },
   { name: 'categoria 3' },
-  { name: 'test' },
+  { name: 'categoria 4' },
 ];
 export default (props) => {
   const SetChange = (e) => {
@@ -23,34 +23,29 @@ export default (props) => {
   };
   return (
     <Navbar bg="light" expand="lg" width="10px">
-      {console.log(props)}
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <NavDropdown title="categories" id="basic-nav-dropdown">
             {test.map(items => (
-              <div>
-                <Nav.Link key={items.id}>{items.name}</Nav.Link>
-              </div>
+                <Nav.Link key={items.name}>{items.name}</Nav.Link>
             ))}
           </NavDropdown>
         </Nav>
-        <Form inline onSubmit={props.handleSubmit}>
-          <FormControl
-            size="sm"
-            value={props.SearchQuery}
-            onChange={SetChange}
-            style={{ width: '190px' }}
-            type="text"
-            placeholder="Search"
-            className="mr-sm-2"
-          />
-          <Link to="/Search">
+          <Form inline onSubmit={props.handleSubmit}>
+            <FormControl
+              size="sm"
+              value={props.SearchBarQuery}
+              onChange={SetChange}
+              style={{ width: '190px' }}
+              type="text"
+              placeholder="Search"
+              className="mr-sm-2"
+            />
             <Button size="sm" type="submit" variant="outline-success">
               Search
             </Button>
-          </Link>
-        </Form>
+          </Form>
       </Navbar.Collapse>
     </Navbar>
   );

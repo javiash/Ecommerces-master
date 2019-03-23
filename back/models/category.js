@@ -1,6 +1,4 @@
 const S = require('sequelize');
-
-
 const db = require('../configure/db');
 
 const Category = db.define('category', {

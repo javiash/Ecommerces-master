@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const passport = require('passport');
 const User = require('../models/user');
+const Comments = require('../models/comments');
+const Cart = require('../models/shopcart');
 
 passport.serializeUser((user, done) => { // serialize: How we save the user
   done(null, user.id);
@@ -18,6 +20,7 @@ router.post('/login', passport.authenticate('local'), (req, res) => {
     res.send({
       id: req.user.id,
       email: req.user.email,
+      isAdmin: req.user.isAdmin,
     });
   }
 });
@@ -35,10 +38,11 @@ router.post('/register', (req, res) => {
         User.create({
           email: req.body.email,
           password: req.body.password,
+          isAdmin: req.body.admin,
         })
-          .then(() => {
-            res.sendStatus(201);
-          });
+          .then((newUser) => {
+            res.send(newUser);
+          })
       }
     });
 });
@@ -57,5 +61,21 @@ router.get('/google', passport.authenticate('google', {
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
   res.redirect('/');
 });
+
+
+
+router.post('/com', (req, res) => {
+  Comments.create({
+    content: 'chau',
+    rating: 3,
+  })
+    .then(comment => {
+      console.log(comment)
+      comment.setFrom(1)
+      comment.setRef(1)
+      res.send('ok')
+    })
+})
+
 
 module.exports = router;

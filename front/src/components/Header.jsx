@@ -10,7 +10,9 @@ import {
 } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import Axios from 'axios';
-import { setShowModal, fetchLogin, fetchUser } from '../store/actions/actions';
+import {
+  setShowModal, fetchLogin, fetchUser, setLogin,
+} from '../store/actions/actions';
 import LogReg from '../containers/logreg';
 
 
@@ -20,7 +22,7 @@ class Header extends React.Component {
       res.send('logout');
     })
       .then(() => {
-        this.props.fetchUser(null);
+        this.props.setLogin(null);
       });
   }
 
@@ -29,15 +31,15 @@ class Header extends React.Component {
   }
 
   render() {
-    if(this.props.isLogin != null){
-       name = this.props.isLogin.email
+    if (this.props.isLogin != null) {
+      name = this.props.isLogin.email;
     }
     const userLogin = (
       <ButtonGroup>
         <DropdownButton as={ButtonGroup} title={name} id="bg-nested-dropdown" drop="left">
-          <Dropdown.Item eventKey="1" name="profile" onClick={this.redirect.bind(this)}>Profile</Dropdown.Item>
-          <Dropdown.Item eventKey="2" name="purchases" onClick={this.redirect.bind(this)}> My purchases</Dropdown.Item>
-          <Dropdown.Item eventKey="2" onClick={this.logOut.bind(this)}> Log Out </Dropdown.Item>
+          <Dropdown.Item key="1" eventKey="1" name="profile" onClick={this.redirect.bind(this)}>Profile</Dropdown.Item>
+          <Dropdown.Item key="2" eventKey="2" name="purchases" onClick={this.redirect.bind(this)}> My purchases</Dropdown.Item>
+          <Dropdown.Item key="3" eventKey="3" onClick={this.logOut.bind(this)}> Log Out </Dropdown.Item>
         </DropdownButton>
       </ButtonGroup>
     );
@@ -60,12 +62,12 @@ class Header extends React.Component {
       <Navbar bg="dark" expand="lg">
         <Navbar.Brand className="mr-auto">
           <Link to="/">
-            <img width="25%" src="./Images/BookStore.png" alt="" />
+            <img width="150px" src="/Images/BookStore.png" alt="" />
           </Link>
         </Navbar.Brand>
         <div>
           <Form inline>
-            {this.props.isLogin ? userLogin: logReg }
+            {this.props.isLogin ? userLogin : logReg }
           </Form>
         </div>
       </Navbar>
@@ -84,6 +86,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     setShowModal: () => dispatch(setShowModal()),
+    setLogin: (user) => dispatch(setLogin(user)),
     fetchLogin: user => dispatch(fetchLogin(user)),
     fetchUser: user => dispatch(fetchUser(user)),
   };

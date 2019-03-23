@@ -1,7 +1,8 @@
-import React from "react";
-import { connect } from "react-redux";
+import React from 'react';
+import { connect } from 'react-redux';
+import { withRouter }from 'react-router-dom'
 import SearchBar from "../components/SearchBar";
-import { fetchSearch, fetchSearchs } from "../store/actions/Searchs";
+import { fetchSearch, fetchSearchs } from '../store/actions/Searchs';
 
 class SearchContainer extends React.Component {
   constructor() {
@@ -13,42 +14,50 @@ class SearchContainer extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSearchInput(Search) {
-    this.setState({ SearchBarQuery: Search });
+  handleSearchInput(Searchs) {
+    this.setState({ SearchBarQuery: Searchs });
   }
 
   handleSubmit(event) {
     event.preventDefault();
     if (this.state.SearchBarQuery) {
       this.props.fetchSearchs(this.state.SearchBarQuery);
+      this.props.history.push(`/search/${this.state.SearchBarQuery}`);
     }
   }
 
   render() {
-    console.log(this.props)
     return (
-      <SearchBar
-      search={this.props.search}
-        setSearch={this.handleSearchInput}
-        SearchBarQuery={this.state.SearchBarQuery}
-        handleSubmit={this.handleSubmit}
-      />
+      <div>
+        <SearchBar
+          value={this.props.searchs}
+          setSearch={this.handleSearchInput}
+          handleSubmit={this.handleSubmit}
+          SearchBarQuery={this.state.SearchBarQuery}
+        />
+      </div>
+
     );
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   return {
-    search: state.search,
-    searchs: state.searchs
+    searchs: state.searches.searchs,
   };
 }
 
-function mapDispatchToProps() {
+function mapDispatchToProps(dispatch) {
   return {
-    fecthSearch: search => dispatch(fetchSearch(search)),
-    fetchSearchs: searchs => dispatch(fetchSearchs(searchs))
+    fetchSearchs: searchs => dispatch(fetchSearchs(searchs)),
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchContainer);
+export default withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SearchContainer));
+connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SearchContainer);

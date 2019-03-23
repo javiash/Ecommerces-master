@@ -30,8 +30,6 @@ app.use(passport.session());
 
 app.use('/SearchBook', Search);
 app.use('/auth', authRoutes);
-
-app.use('/auth', authRoutes);
 app.use('/cart', cartRoutes);
 
 app.get('/*', (req, res) => {
@@ -50,5 +48,4 @@ app.get('/*', (req, res) => {
 
 db.sync({ force: false }).then(() => {
   app.listen(3000, () => console.log('SERVER LISTENING AT PORT 3000'));
-
 });

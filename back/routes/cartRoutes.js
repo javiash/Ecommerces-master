@@ -4,37 +4,27 @@ const Book = require('../models/book')
 const { bookPurchase, bookCategory } = require('../models/index-models');
 
 
-router.post('/new', (req, res) => {
-  Book.create({
-    name: 'Gastón',
-    author: 'Javi',
-    year: 2019,
-    editorial: 'Pepe',
-    description: 'Es una historia',
-    sold: 0,
-    price: 21.5,
-    stock: 458,
-  })
-})
-
 router.get('/:id', (req, res) => {
-  Cart.findAll({ where: { ownerId: req.params.id } })
-    .then(cart => res.send(cart));
-});
-
-
-router.post('/:id', (req, res) => {
-  Cart.findByPk(req.params.id);
-});
-
-router.get('/newcart', (req, res) => {
-  Cart.create({
-    quantity: req.body.quantity,
-  })
-  .then(cart => {
-    cart.setOwner(req.body.owner)
-    res.send('carrito')
-  })
+  Cart.findOne({ where: { userId: req.params.id } })
+    .then((cart) => {
+      res.send(cart)
+    }
+    )
 })
+
+router.post('/new/:id', (req, res) => {
+  if(req.body.length != 0){
+  req.body.map(book => {
+    Cart.create({
+      userId: req.params.id,
+      quantity: book.quantity,
+      bookId: book.id,
+    })
+  })
+  .then(() => {
+    res.send('ok')
+  });}
+});
+
 
 module.exports = router;

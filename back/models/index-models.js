@@ -5,7 +5,7 @@ const Comment = require('./comments');
 const Cart = require('./shopcart');
 const Category = require('./category');
 
-Cart.belongsTo(User, { as: 'owner' });
+User.belongsToMany(Book, {through: Cart})
 
 Comment.belongsTo(User, { as: 'from' });
 Comment.belongsTo(Book, { as: 'ref' });

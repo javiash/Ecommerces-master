@@ -62,7 +62,7 @@ class Header extends React.Component {
       <Navbar bg="dark" expand="lg">
         <Navbar.Brand className="mr-auto">
           <Link to="/">
-            <img width="150px" src="./Images/BookStore.png" alt="" />
+            <img width="150px" src="/Images/BookStore.png" alt="" />
           </Link>
         </Navbar.Brand>
         <div>

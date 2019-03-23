@@ -19,5 +19,6 @@
         "react"
     ],
     "rules": {
+        "react/prefer-stateless-function": [<enabled>, { "ignorePureComponents": <ignorePureComponents> }]
     }
 }

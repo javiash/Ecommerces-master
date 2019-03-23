@@ -27,22 +27,22 @@ export default () => (
         <Card style={{ width: '25rem' }}>
           <Card.Img variant="top" src={item.img} />
           <Card.Body>
-              <Card.Title>{item.name}</Card.Title>
-              <Card.Text>{item.content}</Card.Text>
-              <Link to="/">
-                  <Button variant="secondary">Ir al Libro</Button>
-                </Link>
-              </Card.Body>
-            </Card>
-          </div>
-        );
-      })}
-      <nav className="pagination item " aria-label="Page navigation example">
+            <Card.Title>{item.name}</Card.Title>
+            <Card.Text>{item.content}</Card.Text>
+            <Link to="/">
+                <Button variant="secondary">Ir al Libro</Button>
+              </Link>
+          </Card.Body>
+        </Card>
+      </div>
+    ),)
+      }
+    <nav className="pagination item " aria-label="Page navigation example">
         <ul className="pagination">
           <li className="page-item">
             <Link to="/" className="page-link" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-                <span className="sr-only">Previous</span>
+              <span aria-hidden="true">&laquo;</span>
+              <span className="sr-only">Previous</span>
             </Link>
           </li>
           <li className="page-item">
@@ -50,11 +50,11 @@ export default () => (
           </li>
           <li className="page-item">
             <Link to="/" className="page-link" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-                <span className="sr-only">Next</span>
+              <span aria-hidden="true">&raquo;</span>
+              <span className="sr-only">Next</span>
             </Link>
-        </li>
-      </ul>
-    </nav>
+          </li>
+        </ul>
+      </nav>
   </div>
 );

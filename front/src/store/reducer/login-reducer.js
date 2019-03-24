@@ -2,8 +2,7 @@ import { SET_SHOWMODAL, SET_HIDEMODAL, SET_LOGIN } from '../constants';
 
 const initialState = {
   showModal: false,
-  isLogin: null,
-  isAdmin: false,
+  isLogin: {},
 };
 
 export default function (state = initialState, action) {

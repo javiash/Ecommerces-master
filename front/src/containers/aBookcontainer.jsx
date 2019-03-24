@@ -9,6 +9,7 @@ import { userAddCart, noUserAddCart } from '../store/actions/actions';
 
 import TableCart from '../components/tablecart';
 
+import { Button, Card } from "react-bootstrap";
 
 class ABookContainer extends React.Component {
   constructor(props) {
@@ -73,7 +74,6 @@ class ABookContainer extends React.Component {
 
           <div>
             <Card style={{ width: '25rem' }}>
-
               <Card.Body>
                 <Card.Title>{book.name}</Card.Title>
                 <Card.Text>
@@ -102,7 +102,6 @@ class ABookContainer extends React.Component {
 
           <div>
             <Card style={{ width: '20rem' }}>
-
               <Card.Body>
                 <Card.Title>shopping cart</Card.Title>
                 <Card.Text>

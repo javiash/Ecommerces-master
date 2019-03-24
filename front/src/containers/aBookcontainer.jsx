@@ -3,17 +3,18 @@
 import React from 'react';
 
 import { Link } from 'react-router-dom';
-import { Button, Card, Modal, Form } from 'react-bootstrap';
+import {
+ Button, Card, Modal, Form 
+} from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Axios from 'axios';
 import { userAddCart, noUserAddCart } from '../store/actions/actions';
-import { fetchSearch } from "../store/actions/Searchs";
+import { fetchSearch } from '../store/actions/Searchs';
 import MessegeUser from '../components/message';
 import BookView from '../components/bookview';
 
 import TableCart from '../components/tablecart';
-
 
 
 class ABookContainer extends React.Component {
@@ -47,10 +48,11 @@ class ABookContainer extends React.Component {
     this.handleClick = this.handleClick.bind(this);
     this.handleHide = this.handleHide.bind(this);
   }
-//   componentDidMount() {
-//     console.log('props', this.props)
-//     this.props.fetchSearch(this.props.match.params.id)
-//   }
+
+  //   componentDidMount() {
+  //     console.log('props', this.props)
+  //     this.props.fetchSearch(this.props.match.params.id)
+  //   }
   // componentDidMount() {
   //   console.log(this.props);
   //   Axios.get(this.props.url)
@@ -70,8 +72,6 @@ class ABookContainer extends React.Component {
   }
 
   render() {
-
-
     const { book, show } = this.state;
     return (
       <div>
@@ -80,7 +80,7 @@ class ABookContainer extends React.Component {
         </div>
         <div className="bookContainer">
           <div>
-            <Card style={{ width: "15rem" }}>
+            <Card style={{ width: '15rem' }}>
               <div>
                 <Card.Img variant="top" src="/Images/gameOfTrones.jpg" />
               </div>
@@ -155,9 +155,9 @@ class ABookContainer extends React.Component {
           </Modal>
 
         </div>
-         <div className="titlebook">
-          <Card.Header>Opinion of the book</Card.Header>
-        </div>
+        <div className="titlebook">
+           <Card.Header>Opinion of the book</Card.Header>
+         </div>
         <div>
           {this.state.messages.map(mes => (
             <div className="messagesContainer">
@@ -173,7 +173,8 @@ class ABookContainer extends React.Component {
 
             </div>
           ))}
-        {this.props.isLogin ? <MessegeUser /> : <span />}
+          {this.props.isLogin ? <MessegeUser /> : <span />}
+        </div>
       </div>
     );
   }
@@ -189,7 +190,7 @@ function mapDispatchToProps(dispatch) {
   return {
     userAddCart: (book, id) => dispatch(userAddCart(book, id)),
     noUserAddCart: (book, id) => dispatch(noUserAddCart(book, id)),
-    fetchSearch: search => dispatch(fetchSearch(search))
+    fetchSearch: search => dispatch(fetchSearch(search)),
   };
 }
 
@@ -197,4 +198,3 @@ export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
 )(ABookContainer));
-

@@ -45,8 +45,21 @@ class DeleteOrAdminModal extends React.Component {
                 <p>
                   This option will permanently delete the selected user from our database.
               </p>
+              
               </Modal.Body>
+              {console.log(this.props.isAdmin)}
               <Modal.Footer>
+                {
+                  this.props.actionDone ?
+                    ( this.props.resetActionDone(),
+                      this.props.isAdmin ? 
+                      (<div><h4>{this.props.userWho} is now a admin.</h4></div>)
+                      :
+                      (<h4>{this.props.userWho} has been deleted</h4>)
+                    )
+                    :
+                    null
+                }
                 <Button onClick={this.props.onHide}>Close</Button>
                 <Button variant="primary" onClick={this.props.adminConversion}>Admin</Button>
                 <Button variant="danger" onClick={this.props.deleteUser}>Delete</Button>

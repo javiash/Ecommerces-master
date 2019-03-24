@@ -8,18 +8,21 @@ import DeleteOrAdmin from '../components/DeleteOrAdmin'
 class UserManagement extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      componentID: 1,
-    }
+    // this.state = {
+    //   componentID: 1,
+    // }
     this.state={
       desiredUser: "",
       modalShow: false ,
       userNotFound: true,
+      actionDone: false,
+      isAdmin: true,
     }
     this.userOnChangeHandle= this.userOnChangeHandle.bind(this);
     this.userHandle= this.userHandle.bind(this);
     this.deleteUser= this.deleteUser.bind(this);
     this.adminConversion= this.adminConversion.bind(this);
+    this.resetActionDone=  this.resetActionDone.bind(this);
   }
 
   userOnChangeHandle(e){
@@ -36,31 +39,38 @@ class UserManagement extends React.Component {
     else{
       Axios.get(`/admin/user/${this.state.desiredUser}`, { email: this.state.desiredUser })
       .then( user => {
-        console.log("LLEGO EL USER?",user.data)
         if (user.data) {
-          this.setState({ modalShow: true , userNotFound: false})
+          this.setState({ modalShow: true, userNotFound: false})
         }else{
-          this.setState({ userNotFound: true, modalShow: true})
+          this.setState({ modalShow: true, userNotFound: true})
         }
-
       })
     }
   }
+
   adminConversion(e){
     e.preventDefault();
-    console.log("adminConversion");
     Axios.get(`/admin/user/convertAdmin/${this.state.desiredUser}`)
     .then(
-      resp => console.log('Actualizo, user admin!')
-    )
-    
-    
+      this.setState({actionDone: true, isAdmin:true})
+      )
   }
+
   deleteUser(e){
     e.preventDefault();
     console.log("deleteUser");
-
+    Axios.get(`/admin/user/deleteUser/${this.state.desiredUser}`)
+    .then(
+      resp => {
+      console.log('Elimino user!')
+      this.setState({actionDone: true, isAdmin: false})
+    })
+      
     
+  }
+
+  resetActionDone(){
+    this.state.actionDone= false;
   }
 
   render() {
@@ -93,6 +103,10 @@ class UserManagement extends React.Component {
                         onHide={modalClose}
                         adminConversion={this.adminConversion}
                         deleteUser={this.deleteUser}
+                        userWho= {this.state.desiredUser}
+                        actionDone= {this.state.actionDone}
+                        resetActionDone= {this.resetActionDone}
+                        isAdmin= {this.state.isAdmin}
                       />
 
                   </Jumbotron>

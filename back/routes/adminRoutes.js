@@ -10,13 +10,21 @@ router.get('/user/:email', (req, res) => {
 });
 
 router.get('/user/convertAdmin/:email', (req, res) => {
-    console.log("ENCUENTRO?")
+  User.findOne({ where: { email: req.params.email } })
+    .then((user) => {
+      user.isAdmin = true;
+      user.save()
+        // .then(e => console.log('EEHHHH', e));
+      res.send(200);
+    });
+});
+
+router.get('/user/deleteUser/:email', (req, res) => {
+  console.log('ENCUENTRO?');
   User.findOne({ where: { email: req.params.email } })
     .then((user) => {
       console.log('ENCONTRO EL USER?', user);
-      user.isAdmin = true;
-      user.save().
-      then(e => console.log("EEHHHH",e));
+      user.destroy();
       res.send(200);
     });
 });

@@ -2,8 +2,12 @@
 /* eslint-disable react/no-unused-state */
 import React from 'react';
 
-import { Button, Card } from 'react-bootstrap';
+import { Button, Card, Form } from 'react-bootstrap';
 import Axios from 'axios';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import MessegeUser from '../components/message';
+import BookView from '../components/bookview';
 
 
 class ABookContainer extends React.Component {
@@ -21,6 +25,14 @@ class ABookContainer extends React.Component {
         price: 1500,
         stock: 200,
       },
+      messages: [{
+        author: 'leo',
+        mess: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit, ea officiis molestias quam corporis assumenda, perspiciatis nostrum maiores optio minima voluptas harum exercitationem. Molestiae commodi nostrum quam voluptas consequuntur omnis.',
+      }, {
+        author: 'juan',
+        mess: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam dolor adipisci, voluptas voluptate, saepe facilis quisquam quasi nam dolores facere in porro nostrum necessitatibus enim ipsam ratione quia sint quo.',
+      }],
+
     };
   }
 
@@ -32,80 +44,45 @@ class ABookContainer extends React.Component {
 
 
   render() {
-    const { book } = this.state;
+    //const { book } = this.state;
     return (
 
       <div>
+        <BookView message={this.state.book} />
+        <div className="titlebook">
+          <Card.Header>Opinion of the book</Card.Header>
+        </div>
         <div>
-          <h1>{book.name}</h1>
+          {this.state.messages.map(mes => (
+            <div className="messagesContainer">
 
+              <Card>
+                <Card.Body>
+                  <Card.Title>{mes.author}</Card.Title>
+                  <Card.Text>
+                    {mes.mess}
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+
+            </div>
+          ))}
         </div>
-        <div className="bookContainer">
-          <div>
-            <Card style={{ width: '15rem' }}>
-              <div>
-                <Card.Img variant="top" src="/Images/gameOfTrones.jpg" />
-              </div>
-            </Card>
-          </div>
-
-          <div>
-            <Card style={{ width: '25rem' }}>
-
-              <Card.Body>
-                <Card.Title>{book.name}</Card.Title>
-                <Card.Text>
-                  <p>
-                    <strong>author: </strong>
-                    {book.author}
-                  </p>
-                  <p>
-                    <strong>year:</strong>
-                    {book.year}
-                  </p>
-                  <p>
-                    <strong>description:</strong>
-                    {book.description}
-                  </p>
-                  <p>
-                    <strong>editorial:</strong>
-                    {book.editorial}
-                  </p>
-                  <p>
-                    <strong>sold:</strong>
-                    {book.sold}
-                  </p>
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </div>
-
-          <div>
-            <Card style={{ width: '20rem' }}>
-
-              <Card.Body>
-                <Card.Title>shopping cart</Card.Title>
-                <Card.Text>
-
-                  <p>
-                    <strong>price:</strong>
-                    {book.price}
-                  </p>
-                  <p>
-                    <strong>stock:</strong>
-                    {book.stock}
-                  </p>
-
-                </Card.Text>
-                <Button variant="primary">add to cart</Button>
-              </Card.Body>
-            </Card>
-
-          </div>
-        </div>
+        {this.props.isLogin ? <MessegeUser /> : <span />}
       </div>
     );
   }
 }
+function mapStateToProps(state) {
+  return {
+    isLogin: state.login.isLogin,
+  };
+}
 
-export default ABookContainer;
+function mapDispatchToProps(dispatch) {
+  return {
+
+  };
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ABookContainer));

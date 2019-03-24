@@ -18,6 +18,8 @@ class searches extends React.Component {
       // this.props.history.push(`/search/${this.state.SearchBarQuery}`)
     }
   }
+
+  
   render() {
     console.log("alooooooooo", this.props.search);
     return (

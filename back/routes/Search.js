@@ -23,9 +23,3 @@ router.get("/:name", (req, res) => {
 });
 
 
-router.get('/:name/:id'),(req,res)=>{
-console.log("holaaaa",req.params.id)
-  Books.findByPk(3).then(book=>{
-    res.json(book)
-  })
-}

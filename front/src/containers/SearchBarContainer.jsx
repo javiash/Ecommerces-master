@@ -43,7 +43,7 @@ class SearchContainer extends React.Component {
     );
   }
 }
-
+  
 function mapStateToProps(state) {
   return {
     searchs: state.searches.searchs,

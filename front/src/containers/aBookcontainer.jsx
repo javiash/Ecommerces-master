@@ -6,6 +6,7 @@ import { Button, Card, Modal } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import Axios from 'axios';
 import { userAddCart, noUserAddCart } from '../store/actions/actions';
+import { fetchSearch } from "../store/actions/Searchs";
 
 import TableCart from '../components/tablecart';
 
@@ -26,14 +27,17 @@ class ABookContainer extends React.Component {
         quantity: 1,
         sold: 15400,
         price: 1500,
-        stock: 200,
-      },
+        stock: 200
+      }
     };
 
     this.handleClick = this.handleClick.bind(this);
     this.handleHide = this.handleHide.bind(this);
   }
-
+//   componentDidMount() {
+//     console.log('props', this.props)
+//     this.props.fetchSearch(this.props.match.params.id)
+//   }
   // componentDidMount() {
   //   console.log(this.props);
   //   Axios.get(this.props.url)
@@ -52,19 +56,16 @@ class ABookContainer extends React.Component {
     this.setState({ show: false });
   }
 
-
   render() {
     const { book, show } = this.state;
     return (
-
       <div>
         <div>
-          <h1>{book.name}</h1>
-
+          <h1>{this.props.search.name}</h1>
         </div>
         <div className="bookContainer">
           <div>
-            <Card style={{ width: '15rem' }}>
+            <Card style={{ width: "15rem" }}>
               <div>
                 <Card.Img variant="top" src="/Images/gameOfTrones.jpg" />
               </div>
@@ -74,7 +75,7 @@ class ABookContainer extends React.Component {
           <div>
             <Card style={{ width: '25rem' }}>
               <Card.Body>
-                <Card.Title>{book.name}</Card.Title>
+                <Card.Title>{this.props.search.name}</Card.Title>
                 <Card.Text>
                   <strong>author: </strong>
                   {book.author}
@@ -153,6 +154,7 @@ function mapDispatchToProps(dispatch) {
   return {
     userAddCart: (book, id) => dispatch(userAddCart(book, id)),
     noUserAddCart: (book, id) => dispatch(noUserAddCart(book, id)),
+    fetchSearch: search => dispatch(fetchSearch(search))
   };
 }
 

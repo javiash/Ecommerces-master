@@ -23,9 +23,9 @@ class Main extends React.Component {
         if (this.props.isLogin) {
           this.props.fetchShopcart(this.props.isLogin.id);
         } else {
-          const local = JSON.parse(localStorage.getItem('Carrito'))
-          if (local) {
-            this.props.setCart(local);
+          const local = JSON.parse(localStorage.getItem('Carrito'));
+          if (typeof local === 'object' && local != null) {
+            this.props.setCart(local.cart);
           }
         }
       });
@@ -41,13 +41,18 @@ class Main extends React.Component {
         <Switch>
           <Route path="/home" render={() => <Home />} />
           <Route path="/log" render={() => <Log />} />
+          <Route path="/book/:id" exact render={({ match }) => <ABookContainer bookId={match} />} />
           <Route path="/search" render={() => <Search />} />
           <Route path="/book" render={() => <ABookContainer />} />
           <Route path="/profile" render={() => <Profile />} />
+<<<<<<< HEAD
           <Route path="/adminProfile" render={() => <AdminProfile />} />
           <Route path="/admin/productManagement" render={() => <ProductManagement />} />
           <Route path="/admin/userManagement" render={() => <UserManagement />} />
           <Route path="/admin/orderManagement" render={() => <OrderManagement />} />
+=======
+
+>>>>>>> f76e3c59423a9efc62a70bb45ed28c2f9fe96f80
           <Redirect from="/" to="/home" />
         </Switch>
       </div>
@@ -65,7 +70,7 @@ function mapDispatchToProps(dispatch) {
   return {
     fetchLogin: () => dispatch(fetchLogin()),
     fetchShopcart: id => dispatch(fetchShopcart(id)),
-    setCart: () => dispatch(setCart()),
+    setCart: cart => dispatch(setCart(cart)),
   };
 }
 

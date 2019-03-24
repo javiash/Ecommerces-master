@@ -13,6 +13,7 @@ const db = require('./configure/db');
 const authRoutes = require('./routes/authRoutes');
 const Search = require('./routes/Search');
 const cartRoutes = require('./routes/cartRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 
 require("./configure/passport-setup");
 
@@ -30,7 +31,7 @@ app.use(passport.session());
 
 app.use('/SearchBook', Search);
 app.use('/auth', authRoutes);
-
+app.use('/admin', adminRoutes);
 app.use('/auth', authRoutes);
 app.use('/cart', cartRoutes);
 

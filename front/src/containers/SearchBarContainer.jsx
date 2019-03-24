@@ -13,6 +13,9 @@ class SearchContainer extends React.Component {
     this.handleSearchInput = this.handleSearchInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+  componentDidMount() {
+    this.props.fetchSearchs()
+  }
 
   handleSearchInput(Searchs) {
     this.setState({ SearchBarQuery: Searchs });
@@ -40,8 +43,8 @@ class SearchContainer extends React.Component {
     );
   }
 }
-
-function mapStateToProps(state, ownProps) {
+  
+function mapStateToProps(state) {
   return {
     searchs: state.searches.searchs,
   };
@@ -57,7 +60,3 @@ export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
 )(SearchContainer));
-connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(SearchContainer);

@@ -1,3 +1,5 @@
+/* eslint-disable no-global-assign */
+/* eslint-disable no-restricted-globals */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/destructuring-assignment */
@@ -27,7 +29,7 @@ class Header extends React.Component {
   }
 
   redirect(name) {
-    this.props.history.push(`/search/${name}`);
+    this.props.history.push(`/user/${name}`);
   }
 
   render() {
@@ -86,7 +88,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     setShowModal: () => dispatch(setShowModal()),
-    setLogin: (user) => dispatch(setLogin(user)),
+    setLogin: user => dispatch(setLogin(user)),
     fetchLogin: user => dispatch(fetchLogin(user)),
     fetchUser: user => dispatch(fetchUser(user)),
   };

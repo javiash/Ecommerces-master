@@ -33,6 +33,7 @@ const searches = props => (
         </Card>
       </div>
     ))}
+
       <nav className="pagination item " aria-label="Page navigation example">
         <ul className="pagination">
           <li className="page-item">

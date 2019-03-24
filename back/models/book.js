@@ -10,6 +10,9 @@ const Book = db.define('books', {
     type: S.STRING,
     alloNull: false,
   },
+  cover:{
+    type: S.STRING,
+  },
   year: {
     type: S.STRING,
     alloNull: false,

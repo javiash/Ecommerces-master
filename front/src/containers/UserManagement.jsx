@@ -1,80 +1,76 @@
 
+/* eslint react/prop-types: 0 */
 import React from 'react';
-import { Button, FormControl, Row, Col, Form, Jumbotron, Tab, Nav, ButtonToolbar } from 'react-bootstrap';
+import {
+  Button, FormControl, Row, Col, Form, Jumbotron, Tab, Nav,
+} from 'react-bootstrap';
 import Axios from 'axios';
 
-import DeleteOrAdmin from '../components/DeleteOrAdmin'
+import DeleteOrAdmin from '../components/DeleteOrAdmin';
 
 class UserManagement extends React.Component {
   constructor(props) {
     super(props);
-    // this.state = {
-    //   componentID: 1,
-    // }
-    this.state={
-      desiredUser: "",
-      modalShow: false ,
+
+    this.state = {
+      desiredUser: '',
+      modalShow: false,
       userNotFound: true,
       actionDone: false,
       isAdmin: true,
-    }
-    this.userOnChangeHandle= this.userOnChangeHandle.bind(this);
-    this.userHandle= this.userHandle.bind(this);
-    this.deleteUser= this.deleteUser.bind(this);
-    this.adminConversion= this.adminConversion.bind(this);
-    this.resetActionDone=  this.resetActionDone.bind(this);
+    };
+    this.userOnChangeHandle = this.userOnChangeHandle.bind(this);
+    this.userHandle = this.userHandle.bind(this);
+    this.deleteUser = this.deleteUser.bind(this);
+    this.adminConversion = this.adminConversion.bind(this);
+    this.resetActionDone = this.resetActionDone.bind(this);
   }
 
-  userOnChangeHandle(e){
+  userOnChangeHandle(e) {
     e.preventDefault();
-    this.state.desiredUser= e.target.value;
+    this.state.desiredUser = e.target.value;
   }
 
-  userHandle(e){
+  userHandle(e) {
     e.preventDefault();
-    console.log('Mando a buscar el usuario', this.state.desiredUser);
-    if(!this.state.desiredUser){
+    if (!this.state.desiredUser) {
       return;
     }
-    else{
-      Axios.get(`/admin/user/${this.state.desiredUser}`, { email: this.state.desiredUser })
-      .then( user => {
+
+    Axios.get(`/admin/user/${this.state.desiredUser}`, { email: this.state.desiredUser })
+      .then((user) => {
         if (user.data) {
-          this.setState({ modalShow: true, userNotFound: false})
-        }else{
-          this.setState({ modalShow: true, userNotFound: true})
+          this.setState({ modalShow: true, userNotFound: false });
+        }else {
+          this.setState({ modalShow: true, userNotFound: true });
         }
-      })
-    }
+      });
   }
 
-  adminConversion(e){
+  adminConversion(e) {
     e.preventDefault();
     Axios.get(`/admin/user/convertAdmin/${this.state.desiredUser}`)
-    .then(
-      this.setState({actionDone: true, isAdmin:true})
-      )
+      .then(
+        this.setState({ actionDone: true, isAdmin: true }),
+      );
   }
 
-  deleteUser(e){
+  deleteUser(e) {
     e.preventDefault();
-    console.log("deleteUser");
     Axios.get(`/admin/user/deleteUser/${this.state.desiredUser}`)
-    .then(
-      resp => {
-      console.log('Elimino user!')
-      this.setState({actionDone: true, isAdmin: false})
-    })
-      
-    
+      .then(
+        (resp) => {
+          this.setState({ actionDone: true, isAdmin: false });
+        },
+      );
   }
 
-  resetActionDone(){
-    this.state.actionDone= false;
+  resetActionDone() {
+    this.state.actionDone = false;
   }
 
   render() {
-    let modalClose = () => this.setState({ modalShow: false });
+    const modalClose = () => this.setState({ modalShow: false });
     return (
       <div>
         <Tab.Container id="left-tabs-example" defaultActiveKey="first">
@@ -92,22 +88,24 @@ class UserManagement extends React.Component {
                   <Jumbotron>
                     <h1>User Management</h1>
                     <Form inline onSubmit={this.userHandle}>
-                      <FormControl type="text" onChange={(e) => this.userOnChangeHandle(e)} placeholder="Search user" className="mr-sm-2" />
+                      <FormControl type="text" onChange={e => this.userOnChangeHandle(e)} placeholder="Search user" className="mr-sm-2" />
                       <Button onClick={this.userHandle} type="submit" variant="outline-success">Search user</Button>
                     </Form>
-                    <hr></hr><hr></hr><hr></hr>
+                    <hr />
+                    <hr />
+                    <hr />
 
-                      <DeleteOrAdmin
-                        userNotFound={this.state.userNotFound}
-                        show={this.state.modalShow}
-                        onHide={modalClose}
-                        adminConversion={this.adminConversion}
-                        deleteUser={this.deleteUser}
-                        userWho= {this.state.desiredUser}
-                        actionDone= {this.state.actionDone}
-                        resetActionDone= {this.resetActionDone}
-                        isAdmin= {this.state.isAdmin}
-                      />
+                    <DeleteOrAdmin
+                      userNotFound={this.state.userNotFound}
+                      show={this.state.modalShow}
+                      onHide={modalClose}
+                      adminConversion={this.adminConversion}
+                      deleteUser={this.deleteUser}
+                      userWho={this.state.desiredUser}
+                      actionDone={this.state.actionDone}
+                      resetActionDone={this.resetActionDone}
+                      isAdmin={this.state.isAdmin}
+                    />
 
                   </Jumbotron>
                 </Tab.Pane>

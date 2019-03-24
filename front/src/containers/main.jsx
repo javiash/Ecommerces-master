@@ -11,17 +11,21 @@ import SearchBarContainer from './SearchBarContainer';
 import { fetchLogin, fetchShopcart, setCart } from '../store/actions/actions';
 import ABookContainer from './aBookcontainer';
 import Profile from './profile';
+import AdminProfile from './AdminProfile';
+import ProductManagement from './ProductManagement';
+import UserManagement from './UserManagement.jsx';
+import OrderManagement from './OrderManagement';
 
 class Main extends React.Component {
   componentDidMount() {
     this.props.fetchLogin()
       .then(() => {
         if (this.props.isLogin) {
-          this.props.fetchShopcart(this.props.isLogin.id)
+          this.props.fetchShopcart(this.props.isLogin.id);
         } else {
-          const local = JSON.parse(localStorage.getItem('Carrito'))
-          if (local) {
-            this.props.setCart(local);
+          const local = JSON.parse(localStorage.getItem('Carrito'));
+          if (typeof local === 'object' && local != null) {
+            this.props.setCart(local.cart);
           }
         }
       });
@@ -41,7 +45,10 @@ class Main extends React.Component {
           <Route path="/search" render={() => <Search />} />
           <Route path="/book" render={() => <ABookContainer />} />
           <Route path="/profile" render={() => <Profile />} />
-
+          <Route path="/adminProfile" render={() => <AdminProfile />} />
+          <Route path="/admin/productManagement" render={() => <ProductManagement />} />
+          <Route path="/admin/userManagement" render={() => <UserManagement />} />
+          <Route path="/admin/orderManagement" render={() => <OrderManagement />} />
           <Redirect from="/" to="/home" />
         </Switch>
       </div>
@@ -59,7 +66,7 @@ function mapDispatchToProps(dispatch) {
   return {
     fetchLogin: () => dispatch(fetchLogin()),
     fetchShopcart: id => dispatch(fetchShopcart(id)),
-    setCart: () => dispatch(setCart()),
+    setCart: cart => dispatch(setCart(cart)),
   };
 }
 
@@ -67,4 +74,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(Main);
-

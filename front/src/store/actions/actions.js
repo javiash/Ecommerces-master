@@ -75,7 +75,8 @@ export const userAddCart = (book, id) => (dispatch, getState) => Axios.post(`/ca
   .then(((res) => {
     if (res === 'update') {
       const beforeState = getState().cart.cart;
-      const newCart = beforeState.map(singleBook => (singleBook.id === book.id ? { ...singleBook, quantity: singleBook.quantity + book.quantity } : singleBook));
+      const newCart = beforeState.map(singleBook => (singleBook.id === book.id
+        ? { ...singleBook, quantity: singleBook.quantity + book.quantity } : singleBook));
       dispatch(setCart(newCart));
     } else if (res === 'add') {
       dispatch(addCart(book));
@@ -85,7 +86,8 @@ export const userAddCart = (book, id) => (dispatch, getState) => Axios.post(`/ca
 export const noUserAddCart = book => (dispatch, getState) => {
   const beforeAdd = getState().cart.cart;
   if (beforeAdd.some(singleBook => singleBook.id === book.id)) {
-    const afterAdd = beforeAdd.map(singleBook => (singleBook.id === book.id ? { ...singleBook, quantity: singleBook.quantity + book.quantity } : singleBook));
+    const afterAdd = beforeAdd.map(singleBook => (singleBook.id === book.id
+      ? { ...singleBook, quantity: singleBook.quantity + book.quantity } : singleBook));
     dispatch(setCart(afterAdd));
   } else {
     dispatch(addCart(book));
@@ -97,6 +99,9 @@ export const noUserAddCart = book => (dispatch, getState) => {
 export const userRemoveCart = (book, id) => (dispatch, getState) => Axios.post(`/cart/${id}`, book)
   .then(() => {
     const beforeState = getState().cart.cart;
-    const newCart = beforeState.filter(singleBook => singleBook.id != book.id);
+    const newCart = beforeState.filter(singleBook => singleBook.id !== book.id);
     dispatch(setCart(newCart));
-  },);
+  });
+
+export const userCleanCart = id => dispatch => Axios.post(`/cart/clean/${id}`)
+  .then(() => dispatch(setCart([])));

@@ -2,25 +2,34 @@
 /* eslint-disable react/no-unused-state */
 import React from 'react';
 
-import { Button, Card, Form } from 'react-bootstrap';
-import Axios from 'axios';
-import { withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { Button, Card, Modal, Form } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import Axios from 'axios';
+import { userAddCart, noUserAddCart } from '../store/actions/actions';
+import { fetchSearch } from "../store/actions/Searchs";
 import MessegeUser from '../components/message';
 import BookView from '../components/bookview';
+
+import TableCart from '../components/tablecart';
+
 
 
 class ABookContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      show: false,
+      hide: true,
       book: {
+        id: 1,
         name: 'Game of Thrones',
         author: 'George R. R. Martin',
         year: '6 de agosto de 1996',
         editorial: 'Bantam Spectra',
         description: 'Se trata de la primera entrega de la serie de gran popularidad Canción de hielo y fuego. La novela se caracteriza por su estética medieval, la descripción de numerosos personajes bien detallados, la contraposición de puntos de vista de los múltiples protagonistas, su trama con giros inesperados y un uso sutil y moderado de los aspectos mágicos tan comunes en otras obras de fantasía heroica.',
+        quantity: 1,
         sold: 15400,
         price: 1500,
         stock: 200,
@@ -34,22 +43,119 @@ class ABookContainer extends React.Component {
       }],
 
     };
-  }
 
+    this.handleClick = this.handleClick.bind(this);
+    this.handleHide = this.handleHide.bind(this);
+  }
+//   componentDidMount() {
+//     console.log('props', this.props)
+//     this.props.fetchSearch(this.props.match.params.id)
+//   }
   // componentDidMount() {
   //   console.log(this.props);
   //   Axios.get(this.props.url)
   //     .them(res => this.setState({ book: res.data }));
   // }
+  handleClick() {
+    if (this.props.isLogin) {
+      this.props.userAddCart(this.state.book, this.props.isLogin.id);
+    } else {
+      this.props.noUserAddCart(this.state.book);
+    }
+    this.setState({ show: true });
+  }
 
+  handleHide() {
+    this.setState({ show: false });
+  }
 
   render() {
-    //const { book } = this.state;
-    return (
 
+
+    const { book, show } = this.state;
+    return (
       <div>
-        <BookView message={this.state.book} />
-        <div className="titlebook">
+        <div>
+          <h1>{this.props.search.name}</h1>
+        </div>
+        <div className="bookContainer">
+          <div>
+            <Card style={{ width: "15rem" }}>
+              <div>
+                <Card.Img variant="top" src="/Images/gameOfTrones.jpg" />
+              </div>
+            </Card>
+          </div>
+
+          <div>
+            <Card style={{ width: '25rem' }}>
+              <Card.Body>
+                <Card.Title>{this.props.search.name}</Card.Title>
+                <Card.Text>
+                  <strong>author: </strong>
+                  {book.author}
+                </Card.Text>
+                <Card.Text>
+                  <strong>year:</strong>
+                  {book.year}
+                </Card.Text>
+                <Card.Text>
+                  <strong>description:</strong>
+                  {book.description}
+                </Card.Text>
+                <Card.Text>
+                  <strong>editorial:</strong>
+                  {book.editorial}
+                </Card.Text>
+                <Card.Text>
+                  <strong>sold:</strong>
+                  {book.sold}
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
+
+          <div>
+            <Card style={{ width: '20rem' }}>
+              <Card.Body>
+                <Card.Title>shopping cart</Card.Title>
+                <Card.Text>
+                  <strong>price:</strong>
+                  {book.price}
+                </Card.Text>
+                <Card.Text>
+                  <strong>stock:</strong>
+                  {book.stock}
+                </Card.Text>
+                <Button variant="primary" onClick={this.handleClick}>add to cart</Button>
+              </Card.Body>
+            </Card>
+          </div>
+
+          <Modal
+            show={show}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+            onHide={this.handleHide}
+          >
+
+            <Modal.Header closeButton>
+              <Modal.Title id="contained-modal-title-vcenter">
+                Congratulation! Your book is added to your Shopping Cart
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <TableCart />
+            </Modal.Body>
+            <Modal.Footer>
+              <Button onClick={this.handleHide}>Continue shopping</Button>
+              <Link to="/"><Button>Shopping Cart</Button></Link>
+            </Modal.Footer>
+          </Modal>
+
+        </div>
+         <div className="titlebook">
           <Card.Header>Opinion of the book</Card.Header>
         </div>
         <div>
@@ -67,12 +173,12 @@ class ABookContainer extends React.Component {
 
             </div>
           ))}
-        </div>
         {this.props.isLogin ? <MessegeUser /> : <span />}
       </div>
     );
   }
 }
+
 function mapStateToProps(state) {
   return {
     isLogin: state.login.isLogin,
@@ -81,8 +187,14 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-
+    userAddCart: (book, id) => dispatch(userAddCart(book, id)),
+    noUserAddCart: (book, id) => dispatch(noUserAddCart(book, id)),
+    fetchSearch: search => dispatch(fetchSearch(search))
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ABookContainer));
+export default withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ABookContainer));
+

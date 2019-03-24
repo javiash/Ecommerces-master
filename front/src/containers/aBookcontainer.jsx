@@ -1,12 +1,19 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable no-undef */
 /* eslint-disable react/no-unused-state */
+
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Button, Card, Modal } from 'react-bootstrap';
+
+import { Link, withRouter } from 'react-router-dom';
+import {
+  Button, Card, Modal,
+} from 'react-bootstrap';
 import { connect } from 'react-redux';
 import Axios from 'axios';
 import { userAddCart, noUserAddCart } from '../store/actions/actions';
-import { fetchSearch } from "../store/actions/Searchs";
+import { fetchSearch } from '../store/actions/Searchs';
+import MessegeUser from '../components/message';
 
 import TableCart from '../components/tablecart';
 
@@ -27,17 +34,26 @@ class ABookContainer extends React.Component {
         quantity: 1,
         sold: 15400,
         price: 1500,
-        stock: 200
-      }
+        stock: 200,
+      },
+      messages: [{
+        author: 'leo',
+        mess: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit, ea officiis molestias quam corporis assumenda, perspiciatis nostrum maiores optio minima voluptas harum exercitationem. Molestiae commodi nostrum quam voluptas consequuntur omnis.',
+      }, {
+        author: 'juan',
+        mess: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam dolor adipisci, voluptas voluptate, saepe facilis quisquam quasi nam dolores facere in porro nostrum necessitatibus enim ipsam ratione quia sint quo.',
+      }],
+
     };
 
     this.handleClick = this.handleClick.bind(this);
     this.handleHide = this.handleHide.bind(this);
   }
-//   componentDidMount() {
-//     console.log('props', this.props)
-//     this.props.fetchSearch(this.props.match.params.id)
-//   }
+
+  //   componentDidMount() {
+  //     console.log('props', this.props)
+  //     this.props.fetchSearch(this.props.match.params.id)
+  //   }
   // componentDidMount() {
   //   console.log(this.props);
   //   Axios.get(this.props.url)
@@ -65,17 +81,16 @@ class ABookContainer extends React.Component {
         </div>
         <div className="bookContainer">
           <div>
-            <Card style={{ width: "15rem" }}>
+            <Card style={{ width: '15rem' }}>
               <div>
                 <Card.Img variant="top" src="/Images/gameOfTrones.jpg" />
               </div>
             </Card>
           </div>
-
           <div>
             <Card style={{ width: '25rem' }}>
               <Card.Body>
-                {/* <Card.Title>{this.props.search.name}</Card.Title> */}
+                <Card.Title>{book.name}</Card.Title>
                 <Card.Text>
                   <strong>author: </strong>
                   {book.author}
@@ -99,7 +114,6 @@ class ABookContainer extends React.Component {
               </Card.Body>
             </Card>
           </div>
-
           <div>
             <Card style={{ width: '20rem' }}>
               <Card.Body>
@@ -138,6 +152,27 @@ class ABookContainer extends React.Component {
               <Link to="/"><Button>Shopping Cart</Button></Link>
             </Modal.Footer>
           </Modal>
+
+        </div>
+        <div className="titlebook">
+          <Card.Header>Opinion of the book</Card.Header>
+        </div>
+        <div>
+          {this.state.messages.map((mes, i) => (
+            <div className="messagesContainer" key={i}>
+
+              <Card>
+                <Card.Body>
+                  <Card.Title>{mes.author}</Card.Title>
+                  <Card.Text>
+                    {mes.mess}
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+
+            </div>
+          ))}
+          {this.props.isLogin ? <MessegeUser /> : <span />}
         </div>
       </div>
     );
@@ -154,11 +189,11 @@ function mapDispatchToProps(dispatch) {
   return {
     userAddCart: (book, id) => dispatch(userAddCart(book, id)),
     noUserAddCart: (book, id) => dispatch(noUserAddCart(book, id)),
-    fetchSearch: search => dispatch(fetchSearch(search))
+    fetchSearch: search => dispatch(fetchSearch(search)),
   };
 }
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ABookContainer);
+)(ABookContainer));

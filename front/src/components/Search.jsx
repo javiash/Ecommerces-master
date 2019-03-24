@@ -34,7 +34,8 @@ class searches extends React.Component {
         </div>
         {this.props.searchs.map(item => (
           <div key={item.name}>
-            <Card style={{ width: "25rem" }}>
+            {console.log(item.id)}
+            <Card style={{ width: '25rem' }}>
               <Card.Img variant="top" src={item.img} />
               <Card.Body>
                 <Card.Title>{item.name}</Card.Title>
@@ -43,7 +44,7 @@ class searches extends React.Component {
                 <Card.Text> release date {item.year}</Card.Text>
                 <Link to={`/book/${item.name}/${item.id}`}>
                   <Button
-                  value={item.id}
+                    value={item.id}
                     Onclick={this.handleSubmit(item.id)}
                     variant="secondary"
                   >
@@ -93,5 +94,5 @@ const mapDispatchToProps = dispatch => {
 };
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(searches);

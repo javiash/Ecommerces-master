@@ -55,12 +55,8 @@ const searches = props => (
           </li>
         </ul>
       </nav>
-<<<<<<< HEAD
-  </div>
-=======
     </div>
   )
->>>>>>> f76e3c59423a9efc62a70bb45ed28c2f9fe96f80
 );
 function mapStateToProps(state) {
   return {

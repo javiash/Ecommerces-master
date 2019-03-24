@@ -45,14 +45,10 @@ class Main extends React.Component {
           <Route path="/search" render={() => <Search />} />
           <Route path="/book" render={() => <ABookContainer />} />
           <Route path="/profile" render={() => <Profile />} />
-<<<<<<< HEAD
           <Route path="/adminProfile" render={() => <AdminProfile />} />
           <Route path="/admin/productManagement" render={() => <ProductManagement />} />
           <Route path="/admin/userManagement" render={() => <UserManagement />} />
           <Route path="/admin/orderManagement" render={() => <OrderManagement />} />
-=======
-
->>>>>>> f76e3c59423a9efc62a70bb45ed28c2f9fe96f80
           <Redirect from="/" to="/home" />
         </Switch>
       </div>

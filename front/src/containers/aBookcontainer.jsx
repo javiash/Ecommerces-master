@@ -1,18 +1,19 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable no-undef */
 /* eslint-disable react/no-unused-state */
+
 import React from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import {
- Button, Card, Modal, Form 
+  Button, Card, Modal,
 } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import Axios from 'axios';
 import { userAddCart, noUserAddCart } from '../store/actions/actions';
 import { fetchSearch } from '../store/actions/Searchs';
 import MessegeUser from '../components/message';
-import BookView from '../components/bookview';
 
 import TableCart from '../components/tablecart';
 
@@ -76,7 +77,7 @@ class ABookContainer extends React.Component {
     return (
       <div>
         <div>
-          <h1>{this.props.search.name}</h1>
+          <h1>{book.name}</h1>
         </div>
         <div className="bookContainer">
           <div>
@@ -86,11 +87,10 @@ class ABookContainer extends React.Component {
               </div>
             </Card>
           </div>
-
           <div>
             <Card style={{ width: '25rem' }}>
               <Card.Body>
-                <Card.Title>{this.props.search.name}</Card.Title>
+                <Card.Title>{book.name}</Card.Title>
                 <Card.Text>
                   <strong>author: </strong>
                   {book.author}
@@ -114,7 +114,6 @@ class ABookContainer extends React.Component {
               </Card.Body>
             </Card>
           </div>
-
           <div>
             <Card style={{ width: '20rem' }}>
               <Card.Body>
@@ -156,11 +155,11 @@ class ABookContainer extends React.Component {
 
         </div>
         <div className="titlebook">
-           <Card.Header>Opinion of the book</Card.Header>
-         </div>
+          <Card.Header>Opinion of the book</Card.Header>
+        </div>
         <div>
-          {this.state.messages.map(mes => (
-            <div className="messagesContainer">
+          {this.state.messages.map((mes, i) => (
+            <div className="messagesContainer" key={i}>
 
               <Card>
                 <Card.Body>

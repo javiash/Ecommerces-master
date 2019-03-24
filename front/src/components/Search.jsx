@@ -56,4 +56,4 @@ export default () => (
       </ul>
     </nav>
   </div>
-)
+);

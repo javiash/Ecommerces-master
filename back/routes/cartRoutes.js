@@ -4,15 +4,10 @@ const Book = require('../models/book')
 const { bookPurchase, bookCategory } = require('../models/index-models');
 
 
-router.get('/:id', (req, res) => {
-  Cart.findOne({ where: { userId: req.params.id } })
-    .then((cart) => {
-      res.send(cart)
-    }
-    )
-})
+
 
 router.post('/new/:id', (req, res) => {
+  console.log(req.body)
   if(req.body.length != 0){
   req.body.map(book => {
     Cart.create({
@@ -26,5 +21,21 @@ router.post('/new/:id', (req, res) => {
   });}
 });
 
+router.get('/:id', (req, res) => {
+  Cart.findOne({ where: { userId: req.params.id } })
+    .then((cart) => {
+      res.send(cart)
+    }
+    )
+})
+
+router.post('/clean/:id', (req, res) => {
+  Cart.destroy({where: {userId: req.params.id}})
+  .then(() => res.sendStatus(200))
+})
+
+router.post('/add/:id', (req, res) => {
+  
+})
 
 module.exports = router;

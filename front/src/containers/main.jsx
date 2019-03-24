@@ -17,11 +17,11 @@ class Main extends React.Component {
     this.props.fetchLogin()
       .then(() => {
         if (this.props.isLogin) {
-          this.props.fetchShopcart(this.props.isLogin.id)
+          this.props.fetchShopcart(this.props.isLogin.id);
         } else {
-          const local = JSON.parse(localStorage.getItem('Carrito'))
-          if (local) {
-            this.props.setCart(local);
+          const local = JSON.parse(localStorage.getItem('Carrito'));
+          if (typeof local === 'object' && local != null) {
+            this.props.setCart(local.cart);
           }
         }
       });
@@ -59,7 +59,7 @@ function mapDispatchToProps(dispatch) {
   return {
     fetchLogin: () => dispatch(fetchLogin()),
     fetchShopcart: id => dispatch(fetchShopcart(id)),
-    setCart: () => dispatch(setCart()),
+    setCart: cart => dispatch(setCart(cart)),
   };
 }
 
@@ -67,4 +67,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(Main);
-

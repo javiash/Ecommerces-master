@@ -13,14 +13,12 @@ import {
 const test = [
   { name: "categoria 1" },
   { name: "categoria 2" },
-  { name: "categoria 3" },
-  { name: "categoria 4" }
+  { name: "categoria 3" }
 ];
 export default props => {
   const SetChange = e => {
     props.setSearch(e.target.value);
   };
-  console.log("esas son",props)
   return (
     <Navbar bg="light" expand="lg" width="10px">
       <Navbar.Toggle aria-controls="basic-navbar-nav" />

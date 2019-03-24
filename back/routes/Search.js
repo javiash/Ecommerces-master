@@ -8,7 +8,6 @@ const Op = Sequelize.Op;
 module.exports = router;
 
 router.get("/:name", (req, res) => {
-  console.log("holaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
   Books.findAll({
     where: {
       [Op.or]: [

@@ -1,25 +1,16 @@
 import React from "react";
 import { Card, Button, ButtonGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { fetchSearch,fetchSearchs } from "../store/actions/Searchs";
+import { withRouter } from "react-router-dom";
+import { fetchSearch, fetchSearchs } from "../store/actions/Searchs";
 import { connect } from "react-redux";
-import Axios from "axios";
 
 class searches extends React.Component {
 
-  handleSubmit(event) {
-    if (this.props) {
-      this.props.fetchSearch(event);
-    }
-  }
-
-    componentDidMount() {
-      console.log('props', this.props)
-      this.props.fetchSearchs()
-
+  componentDidMount() {
+    this.props.fetchSearchs(this.props.match.params.name);
   }
   render() {
-    console.log("alooooooooo", this.props);
     return (
       <div className="Books">
         <div className="itemA">
@@ -34,18 +25,16 @@ class searches extends React.Component {
         </div>
         {this.props.searchs.map(item => (
           <div key={item.name}>
-            {console.log(item.id)}
-            <Card style={{ width: '25rem' }}>
+            <Card style={{ width: "25rem" }}>
               <Card.Img variant="top" src={item.img} />
               <Card.Body>
                 <Card.Title>{item.name}</Card.Title>
                 <Card.Subtitle>{item.author}</Card.Subtitle>
                 <Card.Text> Price:{item.price}$</Card.Text>
                 <Card.Text> release date {item.year}</Card.Text>
-                <Link to={`/book/${item.name}/${item.id}`}>
+                <Link to={`/book/${item.id}`}>
                   <Button
                     value={item.id}
-                    Onclick={this.handleSubmit(item.id)}
                     variant="secondary"
                   >
                     Ir al Libro
@@ -82,17 +71,18 @@ class searches extends React.Component {
 }
 function mapStateToProps(state) {
   return {
-    searchs: state.searches.searchs,
-    // search: state.seaches.search
+    searchs: state.searches.searchs
   };
 }
 const mapDispatchToProps = dispatch => {
   return {
     fetchSearch: search => dispatch(fetchSearch(search)),
-    fetchSearchs: searchs => dispatch(fetchSearch(searchs))
+    fetchSearchs: searchs => dispatch(fetchSearchs(searchs))
   };
 };
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(searches);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(searches)
+);

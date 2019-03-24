@@ -13,6 +13,7 @@ const app = express();
 const db = require('./configure/db');
 const authRoutes = require('./routes/authRoutes');
 const Search = require('./routes/Search');
+const SingleBook=require('./routes/book')
 const cartRoutes = require('./routes/cartRoutes');
 require('./configure/passport-setup');
 const adminRoutes = require('./routes/adminRoutes');
@@ -28,8 +29,8 @@ app.use(express.static(`${__dirname}/public`));
 app.use(passport.initialize()); // passport configuration & session connection
 app.use(passport.session());
 
-
-app.use('/SearchBook', Search);
+app.use('/singlebook', SingleBook);
+app.use('/searchbook', Search);
 app.use('/auth', authRoutes);
 app.use('/admin', adminRoutes);
 app.use('/auth', authRoutes);

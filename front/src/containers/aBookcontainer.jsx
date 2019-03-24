@@ -24,18 +24,6 @@ class ABookContainer extends React.Component {
     this.state = {
       show: false,
       hide: true,
-      book: {
-        id: 1,
-        name: 'Game of Thrones',
-        author: 'George R. R. Martin',
-        year: '6 de agosto de 1996',
-        editorial: 'Bantam Spectra',
-        description: 'Se trata de la primera entrega de la serie de gran popularidad Canción de hielo y fuego. La novela se caracteriza por su estética medieval, la descripción de numerosos personajes bien detallados, la contraposición de puntos de vista de los múltiples protagonistas, su trama con giros inesperados y un uso sutil y moderado de los aspectos mágicos tan comunes en otras obras de fantasía heroica.',
-        quantity: 1,
-        sold: 15400,
-        price: 1500,
-        stock: 200,
-      },
       messages: [{
         author: 'leo',
         mess: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit, ea officiis molestias quam corporis assumenda, perspiciatis nostrum maiores optio minima voluptas harum exercitationem. Molestiae commodi nostrum quam voluptas consequuntur omnis.',
@@ -49,16 +37,9 @@ class ABookContainer extends React.Component {
     this.handleClick = this.handleClick.bind(this);
     this.handleHide = this.handleHide.bind(this);
   }
-
-  //   componentDidMount() {
-  //     console.log('props', this.props)
-  //     this.props.fetchSearch(this.props.match.params.id)
-  //   }
-  // componentDidMount() {
-  //   console.log(this.props);
-  //   Axios.get(this.props.url)
-  //     .them(res => this.setState({ book: res.data }));
-  // }
+  componentDidMount(){
+    this.props.fetchSearch(this.props.match.params.id)
+  }
   handleClick() {
     if (this.props.isLogin) {
       this.props.userAddCart(this.state.book, this.props.isLogin.id);
@@ -74,10 +55,11 @@ class ABookContainer extends React.Component {
 
   render() {
     const { book, show } = this.state;
+    const { search }=this.props
     return (
       <div>
         <div>
-          <h1>{book.name}</h1>
+          <h1>{search.name}</h1>
         </div>
         <div className="bookContainer">
           <div>
@@ -90,26 +72,26 @@ class ABookContainer extends React.Component {
           <div>
             <Card style={{ width: '25rem' }}>
               <Card.Body>
-                <Card.Title>{book.name}</Card.Title>
+                <Card.Title>{search.name}</Card.Title>
                 <Card.Text>
                   <strong>author: </strong>
-                  {book.author}
+                  {search.author}
                 </Card.Text>
                 <Card.Text>
                   <strong>year:</strong>
-                  {book.year}
+                  {search.year}
                 </Card.Text>
                 <Card.Text>
                   <strong>description:</strong>
-                  {book.description}
+                  {search.description}
                 </Card.Text>
                 <Card.Text>
                   <strong>editorial:</strong>
-                  {book.editorial}
+                  {search.editorial}
                 </Card.Text>
                 <Card.Text>
                   <strong>sold:</strong>
-                  {book.sold}
+                  {search.sold}
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -120,11 +102,11 @@ class ABookContainer extends React.Component {
                 <Card.Title>shopping cart</Card.Title>
                 <Card.Text>
                   <strong>price:</strong>
-                  {book.price}
+                  {search.price}
                 </Card.Text>
                 <Card.Text>
                   <strong>stock:</strong>
-                  {book.stock}
+                  {search.stock}
                 </Card.Text>
                 <Button variant="primary" onClick={this.handleClick}>add to cart</Button>
               </Card.Body>
@@ -182,6 +164,7 @@ class ABookContainer extends React.Component {
 function mapStateToProps(state) {
   return {
     isLogin: state.login.isLogin,
+    search: state.searches.search
   };
 }
 

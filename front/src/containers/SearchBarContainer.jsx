@@ -28,8 +28,10 @@ class SearchContainer extends React.Component {
       this.props.history.push(`/search/${this.state.SearchBarQuery}`);
     }
   }
+  
 
   render() {
+
     return (
       <div>
         <SearchBar

@@ -27,13 +27,13 @@ class LogReg extends React.Component {
     e.preventDefault();
     const email = this.inputLoginEmail.value;
     const password = this.inputLoginPass.value;
-    console.log('pass', password)
+    console.log('pass', password);
     this.props.fetchUser(email, password)
       .then((user) => {
-        console.log(user)
-        this.props.fetchShopcart(user.id)
+        console.log(user);
+        this.props.fetchShopcart(user.id);
         this.props.setHideModal();
-      })
+      });
   }
 
   handleRegister(e) {
@@ -52,11 +52,11 @@ class LogReg extends React.Component {
         }
 
         this.props.fetchUser(email, password)
-        .then((user) =>{
-          console.log(user)
-          this.props.setDBCart(user.id),
-          this.props.setHideModal()}
-        )
+          .then((user) => {
+            console.log(user);
+            this.props.setDBCart(user.id),
+            this.props.setHideModal() ;
+},);
       });
   }
 
@@ -134,10 +134,10 @@ function mapDispatchToProps(dispatch) {
     setShowModal: () => dispatch(setShowModal()),
     setHideModal: () => dispatch(setHideModal()),
     fetchLogin: user => dispatch(fetchLogin(user)),
-    fetchShopcart: (id) => dispatch(fetchShopcart(id)),
+    fetchShopcart: id => dispatch(fetchShopcart(id)),
     setDBCart: () => dispatch(setDBCart()),
     fetchUser: (email, password) => dispatch(fetchUser(email, password)),
-    setCart: (cart) =>dispatch(setCart(cart)),
+    setCart: cart => dispatch(setCart(cart)),
   };
 }
 

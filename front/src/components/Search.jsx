@@ -1,27 +1,25 @@
 import React from "react";
 import { Card, Button, ButtonGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { fetchSearch } from "../store/actions/Searchs";
+import { fetchSearch,fetchSearchs } from "../store/actions/Searchs";
 import { connect } from "react-redux";
+import Axios from "axios";
 
 class searches extends React.Component {
-  constructor() {
-    super();
-    this.state={
-      search:{}
-    }
-  }
 
   handleSubmit(event) {
     if (this.props) {
       this.props.fetchSearch(event);
-      // this.props.history.push(`/search/${this.state.SearchBarQuery}`)
     }
   }
 
-  
+    componentDidMount() {
+      console.log('props', this.props)
+      this.props.fetchSearchs()
+
+  }
   render() {
-    console.log("alooooooooo", this.props.search);
+    console.log("alooooooooo", this.props);
     return (
       <div className="Books">
         <div className="itemA">
@@ -36,7 +34,6 @@ class searches extends React.Component {
         </div>
         {this.props.searchs.map(item => (
           <div key={item.name}>
-            {console.log(item.id)}
             <Card style={{ width: "25rem" }}>
               <Card.Img variant="top" src={item.img} />
               <Card.Body>
@@ -44,7 +41,7 @@ class searches extends React.Component {
                 <Card.Subtitle>{item.author}</Card.Subtitle>
                 <Card.Text> Price:{item.price}$</Card.Text>
                 <Card.Text> release date {item.year}</Card.Text>
-                <Link to={`/book/${item.id}`}>
+                <Link to={`/book/${item.name}/${item.id}`}>
                   <Button
                   value={item.id}
                     Onclick={this.handleSubmit(item.id)}
@@ -90,7 +87,8 @@ function mapStateToProps(state) {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    fetchSearch: search => dispatch(fetchSearch(search))
+    fetchSearch: search => dispatch(fetchSearch(search)),
+    fetchSearchs: searchs => dispatch(fetchSearch(searchs))
   };
 };
 export default connect(

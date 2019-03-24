@@ -46,6 +46,6 @@ app.get("/*", (req, res) => {
 //   },
 // );
 
-db.sync({ force: false }).then(() => {
+db.sync({ force: false}).then(() => {
   app.listen(3000, () => console.log("SERVER LISTENING AT PORT 3000"));
 });

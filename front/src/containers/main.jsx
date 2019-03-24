@@ -38,7 +38,7 @@ class Main extends React.Component {
           <Route path="/home" render={() => <Home />} />
           <Route path="/log" render={() => <Log />} />
           <Route path="/book/:id" exact render={({ match }) => <ABookContainer bookId={match} />} />
-          <Route path="/search" render={() => <Search />} />
+          <Route path="/search/:name" render={({ match }) => <Search nameId={match}/>} />
           <Route path="/book" render={() => <ABookContainer />} />
           <Route path="/profile" render={() => <Profile />} />
 

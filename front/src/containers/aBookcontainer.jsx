@@ -61,7 +61,7 @@ class ABookContainer extends React.Component {
     return (
       <div>
         <div>
-          <h1>{this.props.search.name}</h1>
+          <h1>{book.name}</h1>
         </div>
         <div className="bookContainer">
           <div>
@@ -75,7 +75,7 @@ class ABookContainer extends React.Component {
           <div>
             <Card style={{ width: '25rem' }}>
               <Card.Body>
-                <Card.Title>{this.props.search.name}</Card.Title>
+                {/* <Card.Title>{this.props.search.name}</Card.Title> */}
                 <Card.Text>
                   <strong>author: </strong>
                   {book.author}

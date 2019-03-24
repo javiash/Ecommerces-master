@@ -42,7 +42,7 @@ class searches extends React.Component {
                 <Card.Subtitle>{item.author}</Card.Subtitle>
                 <Card.Text> Price:{item.price}$</Card.Text>
                 <Card.Text> release date {item.year}</Card.Text>
-                <Link to="/book/:id" y>
+                <Link to={`/book/${item.id}`}>
                   <Button
                   value={item.id}
                     Onclick={this.handleSubmit(item.id)}

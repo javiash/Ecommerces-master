@@ -1,14 +1,19 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/no-unused-state */
 import React from 'react';
+
 import { Link } from 'react-router-dom';
-import { Button, Card, Modal } from 'react-bootstrap';
+import { Button, Card, Modal, Form } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import Axios from 'axios';
 import { userAddCart, noUserAddCart } from '../store/actions/actions';
 import { fetchSearch } from "../store/actions/Searchs";
+import MessegeUser from '../components/message';
+import BookView from '../components/bookview';
 
 import TableCart from '../components/tablecart';
+
 
 
 class ABookContainer extends React.Component {
@@ -27,8 +32,16 @@ class ABookContainer extends React.Component {
         quantity: 1,
         sold: 15400,
         price: 1500,
-        stock: 200
-      }
+        stock: 200,
+      },
+      messages: [{
+        author: 'leo',
+        mess: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit, ea officiis molestias quam corporis assumenda, perspiciatis nostrum maiores optio minima voluptas harum exercitationem. Molestiae commodi nostrum quam voluptas consequuntur omnis.',
+      }, {
+        author: 'juan',
+        mess: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam dolor adipisci, voluptas voluptate, saepe facilis quisquam quasi nam dolores facere in porro nostrum necessitatibus enim ipsam ratione quia sint quo.',
+      }],
+
     };
 
     this.handleClick = this.handleClick.bind(this);
@@ -57,6 +70,8 @@ class ABookContainer extends React.Component {
   }
 
   render() {
+
+
     const { book, show } = this.state;
     return (
       <div>
@@ -138,7 +153,27 @@ class ABookContainer extends React.Component {
               <Link to="/"><Button>Shopping Cart</Button></Link>
             </Modal.Footer>
           </Modal>
+
         </div>
+         <div className="titlebook">
+          <Card.Header>Opinion of the book</Card.Header>
+        </div>
+        <div>
+          {this.state.messages.map(mes => (
+            <div className="messagesContainer">
+
+              <Card>
+                <Card.Body>
+                  <Card.Title>{mes.author}</Card.Title>
+                  <Card.Text>
+                    {mes.mess}
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+
+            </div>
+          ))}
+        {this.props.isLogin ? <MessegeUser /> : <span />}
       </div>
     );
   }
@@ -158,7 +193,8 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ABookContainer);
+)(ABookContainer));
+

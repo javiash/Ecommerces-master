@@ -36,18 +36,18 @@ class Main extends React.Component {
         <section>
           <Header />
           <SearchBarContainer />
+          <Switch>
+            <Route path="/home" render={() => <Home />} />
+            <Route path="/admin" exact render={() => <AdminProfile />} />
+            <Route path="/book/:id" exact render={({ match }) => <ABookContainer bookId={match} />} />
+            <Route path="/search/:name" render={({ match }) => <Search nameId={match} />} />
+            <Route path="/profile/:id" render={({ match }) => <Profile profileId={match} />} />
+            <Route path="/admin/productManagement" render={() => <ProductManagement />} />
+            <Route path="/admin/userManagement" render={() => <UserManagement />} />
+            <Route path="/admin/orderManagement" render={() => <OrderManagement />} />
+            <Redirect from="/" to="/home" />
+          </Switch>
         </section>
-        <Switch>
-          <Route path="/home" render={() => <Home />} />
-          <Route path="/book/:id" exact render={({ match }) => <ABookContainer bookId={match} />} />
-          <Route path="/search/:name" render={({ match }) => <Search nameId={match} />} />
-          <Route path="/profile/:id" render={({ match }) => <Profile profileId={match} />} />
-          <Route path="/adminProfile" render={() => <AdminProfile />} />
-          <Route path="/admin/productManagement" render={() => <ProductManagement />} />
-          <Route path="/admin/userManagement" render={() => <UserManagement />} />
-          <Route path="/admin/orderManagement" render={() => <OrderManagement />} />
-          <Redirect from="/" to="/home" />
-        </Switch>
       </div>
     );
   }

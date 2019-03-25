@@ -6,7 +6,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import {
   setShowModal,
   fetchLogin,
@@ -48,7 +48,7 @@ class Profile extends React.Component {
                   <a className="nav-link" href="/history">History</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/admin">Admin Panel</a>
+                  <Link to={'/admin'}>Admin Panel</Link>
                 </li>
               </ul>
             </div>

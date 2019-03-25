@@ -1,6 +1,7 @@
 import Axios from 'axios';
 import {
   SET_SHOWMODAL, SET_HIDEMODAL, SET_LOGIN, SET_CART, ADD_CART,
+  SET_COMMENTS,
 } from '../constants';
 
 
@@ -41,6 +42,13 @@ export const fetchLogin = () => dispatch => Axios.get('/auth/me')
     if (res != null) {
       dispatch(setLogin(res.data));
     }
+  });
+
+export const setLogout = () => dispatch => Axios.get('/auth/logout', (req, res) => {
+  res.send('logout');
+})
+  .then(() => {
+    dispatch(setLogin(null));
   });
 
 // Cart----------------
@@ -105,3 +113,22 @@ export const userRemoveCart = (book, id) => (dispatch, getState) => Axios.post(`
 
 export const userCleanCart = id => dispatch => Axios.post(`/cart/clean/${id}`)
   .then(() => dispatch(setCart([])));
+
+
+// Comments
+
+const setComments = function setComments(comments) {
+  return {
+    type: SET_COMMENTS,
+    comments,
+  };
+};
+
+export const setComment = (comment, rating, id, bookId) => dispatch => Axios.post(`/comments/${id}`, {
+  content: comment,
+  rating,
+  bookId,
+});
+
+export const fetchComments = id => dispatch => Axios.get(`/comments/${id}`)
+  .then(comments => dispatch(setComments(comments.data)))

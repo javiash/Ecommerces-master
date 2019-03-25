@@ -18,12 +18,21 @@ router.post('/newbook', (req, res) => {
 
 
 router.get('/:id', (req, res) => {
-  Cart.findAll({ include: [{model: Book, where: { userId: req.params.id }}]})
+  Cart.findAll({ include: [{model: Book, as: 'bookId', where: { userId: req.params.id }}]})
     .then((cart) => {
       res.send(cart)
     }
     )
 })
+
+// router.get('/:id', (req, res) => {
+//   Cart.findAll({ where: { userId: req.params.id }, include: [Book]})
+//     .then((cart) => {
+//       console.log('CARRRRO')
+//       res.send(cart)
+//     }
+//     )
+// })
 
 router.post('/new/:id', (req, res) => {
   if (req.body.length != 0) {
@@ -48,6 +57,7 @@ router.post('/add/:id', (req, res) => {
   Cart.findAll({ where: { userId: req.params.id } })
     .then(oneCart => {
       if (oneCart.some(e => e.bookId === req.body.id)) {
+        console.log('ACTUALIZO')
         oneCart.map((singleBook) => {
           if (singleBook.bookId === req.body.id) {
             Cart.update(
@@ -58,6 +68,7 @@ router.post('/add/:id', (req, res) => {
           }
         })
       } else {
+        console.log('AGREGO')
         Cart.create({
           userId: req.params.id,
           bookId: req.body.id,
@@ -66,6 +77,13 @@ router.post('/add/:id', (req, res) => {
           .then(() => res.send('add'))
       }
     })
+})
+
+router.post('/remove/:id', (req, res) => {
+  console.log(req.body)
+  Cart.destroy({where: {userId: req.params.id, bookId: req.body.book.id}})
+  console.log('borrado')
+  .then(() => res.send('erase'))
 })
 
 module.exports = router;

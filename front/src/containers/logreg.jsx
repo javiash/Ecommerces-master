@@ -27,10 +27,8 @@ class LogReg extends React.Component {
     e.preventDefault();
     const email = this.inputLoginEmail.value;
     const password = this.inputLoginPass.value;
-    console.log('pass', password);
     this.props.fetchUser(email, password)
       .then((user) => {
-        console.log(user);
         this.props.fetchShopcart(user.id);
         this.props.setHideModal();
       });

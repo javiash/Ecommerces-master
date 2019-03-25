@@ -1,3 +1,6 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable react/jsx-no-bind */
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable no-undef */
@@ -205,7 +208,7 @@ class ABookContainer extends React.Component {
             </Modal.Body>
             <Modal.Footer>
               <Button onClick={this.handleHide}>Continue shopping</Button>
-              <Link to="/"><Button>Shopping Cart</Button></Link>
+              <Link to="/shoppingcart"><Button>Shopping Cart</Button></Link>
             </Modal.Footer>
           </Modal>
 

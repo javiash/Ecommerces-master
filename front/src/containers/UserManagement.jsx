@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 
 /* eslint react/prop-types: 0 */
 import React from 'react';
@@ -5,6 +6,7 @@ import {
   Button, FormControl, Row, Col, Form, Jumbotron, Tab, Nav,
 } from 'react-bootstrap';
 import Axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import DeleteOrAdmin from '../components/DeleteOrAdmin';
 
@@ -41,7 +43,7 @@ class UserManagement extends React.Component {
       .then((user) => {
         if (user.data) {
           this.setState({ modalShow: true, userNotFound: false });
-        }else {
+        } else {
           this.setState({ modalShow: true, userNotFound: true });
         }
       });
@@ -59,7 +61,7 @@ class UserManagement extends React.Component {
     e.preventDefault();
     Axios.get(`/admin/user/deleteUser/${this.state.desiredUser}`)
       .then(
-        (resp) => {
+        () => {
           this.setState({ actionDone: true, isAdmin: false, modalShow: false });
         },
       );
@@ -77,6 +79,9 @@ class UserManagement extends React.Component {
           <Row>
             <Col sm={3}>
               <Nav variant="pills" className="flex-column">
+                <Nav.Item>
+                  <Link to="/admin">User management</Link>
+                </Nav.Item>
                 <Nav.Item>
                   <Nav.Link eventKey="first">User management</Nav.Link>
                 </Nav.Item>

@@ -1,26 +1,28 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
-import React from "react";
+import React from 'react';
 import {
   Button,
   FormControl,
   Form,
   NavDropdown,
   Nav,
-  Navbar
-} from "react-bootstrap";
+  Navbar,
+  Badge,
+} from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const test = [
-  { name: "categoria 1" },
-  { name: "categoria 2" },
-  { name: "categoria 3" },
-  { name: "categoria 4" }
+  { name: 'categoria 1' },
+  { name: 'categoria 2' },
+  { name: 'categoria 3' },
+  { name: 'categoria 4' },
 ];
-export default props => {
-  const SetChange = e => {
+const SearchBar = (props) => {
+  const SetChange = (e) => {
     props.setSearch(e.target.value);
   };
-  console.log("esas son",props)
   return (
     <Navbar bg="light" expand="lg" width="10px">
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -35,12 +37,21 @@ export default props => {
           </NavDropdown>
         </Nav>
 
+        <Button variant="warning">
+          <Link to="/shoppingcart">
+            <Badge variant="light">{props.cart.length}</Badge>
+          U$S
+            {props.cart.reduce((acc, val) => acc + Math.ceil(val.price * val.quantity), 0)}
+          </Link>
+        </Button>
+
+
         <Form inline onSubmit={props.handleSubmit}>
           <FormControl
             size="sm"
             value={props.SearchBarQuery}
             onChange={SetChange}
-            style={{ width: "190px" }}
+            style={{ width: '190px' }}
             type="text"
             placeholder="Search"
             className="mr-sm-2"
@@ -53,3 +64,17 @@ export default props => {
     </Navbar>
   );
 };
+
+function mapStateToProps(state) {
+  return {
+    isLogin: state.login.isLogin,
+    cart: state.cart.cart,
+  };
+}
+
+function mapDispatchToProps() {
+  return {
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

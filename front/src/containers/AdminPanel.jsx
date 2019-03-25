@@ -1,15 +1,17 @@
 import React from 'react';
-import { Button, ButtonGroup, Jumbotron, Row, Col, Container, Form } from 'react-bootstrap';
+import {
+  Button, ButtonGroup,
+} from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 export default () => (
 
-    <ButtonGroup vertical>
-
-        <Button href='/admin/productManagement/create'>Create product</Button>
-        <Button href='/admin/productManagement/edit'>Edit product</Button>
-        <Button href='/admin/productManagement/createCat'>Create category</Button>
-        <Button href='/admin/productManagement/editCat'>Edit product category</Button>
-        <Button href='/admin/productManagement/stockMan'>Stock management</Button>
-
-    </ButtonGroup>
-)
+  <ButtonGroup vertical>
+    <Link to="/admin/"><Button>Go back</Button></Link>
+    <Link to="/admin/productManagement/create"><Button>Create product</Button></Link>
+    <Link to="/admin/productManagement/create"><Button>Edit product</Button></Link>
+    <Link to="/admin/productManagement/createCat"><Button>Create category</Button></Link>
+    <Link to="/admin/productManagement/editCat"><Button>Edit product category</Button></Link>
+    <Link to="/admin/productManagement/stockMan"><Button>Stock management</Button></Link>
+  </ButtonGroup>
+);

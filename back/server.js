@@ -30,7 +30,7 @@ app.use(express.static(`${__dirname}/public`));
 app.use(passport.initialize()); // passport configuration & session connection
 app.use(passport.session());
 
-app.use('/singleBook', singlebook);
+
 app.use('/SearchBook', Search);
 app.use('/singlebook', bookRoutes);
 app.use('/auth', authRoutes);

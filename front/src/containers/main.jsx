@@ -14,6 +14,7 @@ import AdminProfile from './AdminProfile';
 import ProductManagement from './ProductManagement';
 import UserManagement from './UserManagement';
 import OrderManagement from './OrderManagement';
+import ShoppingCart from './shoppingCart';
 
 class Main extends React.Component {
   componentDidMount() {
@@ -45,6 +46,7 @@ class Main extends React.Component {
             <Route path="/admin/productManagement" render={() => <ProductManagement />} />
             <Route path="/admin/userManagement" render={() => <UserManagement />} />
             <Route path="/admin/orderManagement" render={() => <OrderManagement />} />
+            <Route path="/shoppingcart" exact render={() => <ShoppingCart />} />
             <Redirect from="/" to="/home" />
           </Switch>
         </section>

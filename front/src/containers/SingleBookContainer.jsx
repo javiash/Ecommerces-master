@@ -1,21 +1,18 @@
-import React from "react";
+import React from 'react';
 
 
+export default class SingleBookContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+    };
+  }
 
-export default class SingleBookContainer extends React.Component{
-
-    constructor(props) {
-        super(props);
-        this.state = {
-        }
-    }
-
-    render() {
-
-        return (
-         <div>
+  render() {
+    return (
+          <div>
              hola putos!!!
-         </div>    
-        )
-    }
+         </div>
+    );
+  }
 }

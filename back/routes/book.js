@@ -9,3 +9,12 @@ router.get('/:id',(req,res)=>{
         res.send(book)
       })
 })
+
+router.post('/create', (req, res) => {
+  console.log('ACA EN EL BACK CREANDO LIBRO', req.body);
+  Books.create(req.body)
+    .then((book) => {
+      console.log("PELOPINCHO", book)
+      res.send('TODO VIENTO');
+    });
+});

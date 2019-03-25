@@ -60,7 +60,7 @@ class UserManagement extends React.Component {
     Axios.get(`/admin/user/deleteUser/${this.state.desiredUser}`)
       .then(
         (resp) => {
-          this.setState({ actionDone: true, isAdmin: false });
+          this.setState({ actionDone: true, isAdmin: false, modalShow: false });
         },
       );
   }

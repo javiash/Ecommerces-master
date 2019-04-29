@@ -18,7 +18,7 @@ router.post('/newbook', (req, res) => {
 
 
 router.get('/:id', (req, res) => {
-  Cart.findAll({ include: [{model: Book, as: 'bookId', where: { userId: req.params.id }}]})
+  Cart.findAll({ include: [{model: Book, where: { userId: req.params.id }}]})
     .then((cart) => {
       res.send(cart)
     }

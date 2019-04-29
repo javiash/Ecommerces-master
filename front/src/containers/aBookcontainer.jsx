@@ -1,3 +1,6 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable react/jsx-no-bind */
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable no-undef */
@@ -7,14 +10,13 @@ import React from 'react';
 
 import { Link, withRouter } from 'react-router-dom';
 import {
-  Button, Card, Modal,
+  Button, Card, Modal, Form,
 } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import Axios from 'axios';
-import { userAddCart, noUserAddCart } from '../store/actions/actions';
+import {
+  userAddCart, noUserAddCart, setComment, fetchComments,
+} from '../store/actions/actions';
 import { fetchSearch } from '../store/actions/Searchs';
-import MessegeUser from '../components/message';
-
 import TableCart from '../components/tablecart';
 
 
@@ -24,46 +26,28 @@ class ABookContainer extends React.Component {
     this.state = {
       show: false,
       hide: true,
-      book: {
-        id: 1,
-        name: 'Game of Thrones',
-        author: 'George R. R. Martin',
-        year: '6 de agosto de 1996',
-        editorial: 'Bantam Spectra',
-        description: 'Se trata de la primera entrega de la serie de gran popularidad Canción de hielo y fuego. La novela se caracteriza por su estética medieval, la descripción de numerosos personajes bien detallados, la contraposición de puntos de vista de los múltiples protagonistas, su trama con giros inesperados y un uso sutil y moderado de los aspectos mágicos tan comunes en otras obras de fantasía heroica.',
-        quantity: 1,
-        sold: 15400,
-        price: 1500,
-        stock: 200,
-      },
-      messages: [{
-        author: 'leo',
-        mess: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit, ea officiis molestias quam corporis assumenda, perspiciatis nostrum maiores optio minima voluptas harum exercitationem. Molestiae commodi nostrum quam voluptas consequuntur omnis.',
-      }, {
-        author: 'juan',
-        mess: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam dolor adipisci, voluptas voluptate, saepe facilis quisquam quasi nam dolores facere in porro nostrum necessitatibus enim ipsam ratione quia sint quo.',
-      }],
-
+      quantity: 1,
     };
 
     this.handleClick = this.handleClick.bind(this);
     this.handleHide = this.handleHide.bind(this);
   }
 
-  //   componentDidMount() {
-  //     console.log('props', this.props)
-  //     this.props.fetchSearch(this.props.match.params.id)
-  //   }
-  // componentDidMount() {
-  //   console.log(this.props);
-  //   Axios.get(this.props.url)
-  //     .them(res => this.setState({ book: res.data }));
-  // }
+  componentDidMount() {
+    this.props.fetchSearch(this.props.match.params.id);
+    this.props.fetchComments(this.props.match.params.id);
+  }
+
+
   handleClick() {
     if (this.props.isLogin) {
-      this.props.userAddCart(this.state.book, this.props.isLogin.id);
+      this.props.userAddCart({
+        ...this.props.search, quantity: this.state.quantity,
+      }, this.props.isLogin.id);
     } else {
-      this.props.noUserAddCart(this.state.book);
+      this.props.noUserAddCart(
+        { ...this.props.search, quantity: this.state.quantity }, this.state.quantity,
+      );
     }
     this.setState({ show: true });
   }
@@ -72,12 +56,84 @@ class ABookContainer extends React.Component {
     this.setState({ show: false });
   }
 
+  handlerChange(e) {
+    e.preventDefault();
+    console.log(parseInt(e.target.value, 10));
+    this.setState({ quantity: parseInt(e.target.value, 10) });
+  }
+
+  postcomment() {
+    this.props.setComment(
+      this.inputCom.value, this.inputRat.value, this.props.isLogin.id, this.props.search.id,
+    );
+  }
+
   render() {
-    const { book, show } = this.state;
+    const { show } = this.state;
+    const { search, comments } = this.props;
+    const more5 = (
+      <Form.Control as="select" onChange={this.handlerChange.bind(this)}>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </Form.Control>
+    );
+    const createOptions = () => {
+      const table = [];
+      for (let i = 0; i < search.stock; i++) {
+        table.push(<option value={i + 1} key={i + 1}>{i + 1}</option>);
+      }
+      return table;
+    };
+
+    const less5 = (
+      <Form.Control as="select" onChange={this.handlerChange.bind(this)}>
+        {createOptions()}
+      </Form.Control>
+    );
+
+
+    const quantity = search.stock > 5 ? more5 : less5;
+
+    const messages = (
+      <Form>
+        <div className="titlebook">
+          <Card.Header>write your opinion</Card.Header>
+        </div>
+        <div className="messagesContainer">
+          <div>
+            <Form.Group controlId="exampleForm.ControlTextarea1">
+              <Form.Control ref={(comment) => { this.inputCom = comment; }} as="textarea" rows="3" />
+            </Form.Group>
+          </div>
+          <Form.Group controlId="exampleForm.ControlSelect1">
+            <Form.Label>punctuation</Form.Label>
+            <Form.Control as="select" ref={(rating) => { this.inputRat = rating; }}>
+              <option value={1}>1</option>
+              <option value={2}>2</option>
+              <option value={3}>3</option>
+              <option value={4}>4</option>
+              <option value={5}>5</option>
+            </Form.Control>
+          </Form.Group>
+          <Button
+            variant="primary"
+            onClick={
+              this.postcomment.bind(this)
+            }
+          >
+            add to coment
+          </Button>
+        </div>
+      </Form>
+    );
+
     return (
       <div>
         <div>
-          <h1>{book.name}</h1>
+          <h1>{search.name}</h1>
         </div>
         <div className="bookContainer">
           <div>
@@ -90,26 +146,23 @@ class ABookContainer extends React.Component {
           <div>
             <Card style={{ width: '25rem' }}>
               <Card.Body>
-                <Card.Title>{book.name}</Card.Title>
+                <Card.Title>{search.name}</Card.Title>
                 <Card.Text>
                   <strong>author: </strong>
-                  {book.author}
+                  {search.author}
                 </Card.Text>
                 <Card.Text>
-                  <strong>year:</strong>
-                  {book.year}
+                  <strong>year: </strong>
+                  {search.year}
                 </Card.Text>
                 <Card.Text>
-                  <strong>description:</strong>
-                  {book.description}
+                  <strong>description: </strong>
+                  <br />
+                  {search.description}
                 </Card.Text>
                 <Card.Text>
                   <strong>editorial:</strong>
-                  {book.editorial}
-                </Card.Text>
-                <Card.Text>
-                  <strong>sold:</strong>
-                  {book.sold}
+                  {search.editorial}
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -117,16 +170,22 @@ class ABookContainer extends React.Component {
           <div>
             <Card style={{ width: '20rem' }}>
               <Card.Body>
-                <Card.Title>shopping cart</Card.Title>
-                <Card.Text>
-                  <strong>price:</strong>
-                  {book.price}
-                </Card.Text>
-                <Card.Text>
-                  <strong>stock:</strong>
-                  {book.stock}
-                </Card.Text>
-                <Button variant="primary" onClick={this.handleClick}>add to cart</Button>
+
+                <Form>
+                  <Card.Text>
+                    <strong>price:</strong>
+                    {search.price}
+                  </Card.Text>
+                  <Card.Text>
+                    <strong>stock:</strong>
+                    {search.stock}
+                  </Card.Text>
+                  <Form.Group controlId="exampleForm.ControlSelect1">
+                    <Form.Label>Quantity</Form.Label>
+                    {quantity}
+                  </Form.Group>
+                  <Button variant="primary" onClick={this.handleClick}>add to cart</Button>
+                </Form>
               </Card.Body>
             </Card>
           </div>
@@ -149,30 +208,30 @@ class ABookContainer extends React.Component {
             </Modal.Body>
             <Modal.Footer>
               <Button onClick={this.handleHide}>Continue shopping</Button>
-              <Link to="/"><Button>Shopping Cart</Button></Link>
+              <Link to="/shoppingcart"><Button>Shopping Cart</Button></Link>
             </Modal.Footer>
           </Modal>
 
         </div>
         <div className="titlebook">
-          <Card.Header>Opinion of the book</Card.Header>
+          <Card.Header>Reviews</Card.Header>
         </div>
         <div>
-          {this.state.messages.map((mes, i) => (
+          {comments.map((mes, i) => (
             <div className="messagesContainer" key={i}>
 
               <Card>
+                <Card.Header>{mes.from.email}</Card.Header>
                 <Card.Body>
-                  <Card.Title>{mes.author}</Card.Title>
                   <Card.Text>
-                    {mes.mess}
+                    {mes.content}
                   </Card.Text>
                 </Card.Body>
               </Card>
 
             </div>
           ))}
-          {this.props.isLogin ? <MessegeUser /> : <span />}
+          {this.props.isLogin ? messages : <span />}
         </div>
       </div>
     );
@@ -182,6 +241,8 @@ class ABookContainer extends React.Component {
 function mapStateToProps(state) {
   return {
     isLogin: state.login.isLogin,
+    search: state.searches.search,
+    comments: state.searches.comments,
   };
 }
 
@@ -190,6 +251,8 @@ function mapDispatchToProps(dispatch) {
     userAddCart: (book, id) => dispatch(userAddCart(book, id)),
     noUserAddCart: (book, id) => dispatch(noUserAddCart(book, id)),
     fetchSearch: search => dispatch(fetchSearch(search)),
+    setComment: (comment, rating, id, bookid) => dispatch(setComment(comment, rating, id, bookid)),
+    fetchComments: id => dispatch(fetchComments(id)),
   };
 }
 

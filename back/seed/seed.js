@@ -4,28 +4,28 @@ const Category = require('../models/category');
 // const User = require('../models/user')
 
 const sdCategories = [{ category: 'Police' },
-  { category: 'Thriller' },
-  { category: 'Romantic' },
-  { category: 'Adventure' },
-  { category: 'Terror' },
-  { category: 'Fiction' },
-  { category: 'Reality' },
-  { category: 'Science fiction' },
-  { category: 'Investigation' },
-  { category: 'Biographical' },
-  { category: 'Childish' },
-  { category: 'Self-help' },
-  { category: 'Erotica' },
-  { category: 'Home' },
-  { category: 'Encyclopedia' },
-  { category: 'Manual' },
-  { category: 'Politics' },
-  { category: 'Economy' },
-  { category: 'Marketing' },
-  { category: 'Society' },
-  { category: 'sports' },
-  { category: 'Travel' },
-  { category: 'Culture' }];
+{ category: 'Thriller' },
+{ category: 'Romantic' },
+{ category: 'Adventure' },
+{ category: 'Terror' },
+{ category: 'Fiction' },
+{ category: 'Reality' },
+{ category: 'Science fiction' },
+{ category: 'Investigation' },
+{ category: 'Biographical' },
+{ category: 'Childish' },
+{ category: 'Self-help' },
+{ category: 'Erotica' },
+{ category: 'Home' },
+{ category: 'Encyclopedia' },
+{ category: 'Manual' },
+{ category: 'Politics' },
+{ category: 'Economy' },
+{ category: 'Marketing' },
+{ category: 'Society' },
+{ category: 'sports' },
+{ category: 'Travel' },
+{ category: 'Culture' }];
 
 const sdBooks = [
   {
@@ -942,4 +942,4 @@ sdBooks.map(sdBook => Book.create(sdBook)
       Category.findOne({ where: { id: tCat } })
         .then(cat => cat.addBook(book));
     }
-  }));
+  }))

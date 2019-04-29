@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-expressions */
 import Axios from 'axios';
 import {
   SET_SHOWMODAL, SET_HIDEMODAL, SET_LOGIN, SET_CART, ADD_CART,
+  SET_COMMENTS,
 } from '../constants';
 
 
@@ -43,6 +45,13 @@ export const fetchLogin = () => dispatch => Axios.get('/auth/me')
     }
   });
 
+export const setLogout = () => dispatch => Axios.get('/auth/logout', (req, res) => {
+  res.send('logout');
+})
+  .then(() => {
+    dispatch(setLogin(null));
+  });
+
 // Cart----------------
 
 export const setCart = function setCart(cart) {
@@ -73,12 +82,14 @@ export const setDBCart = id => (dispatch, getState) => Axios.post(`/cart/new/${i
 
 export const userAddCart = (book, id) => (dispatch, getState) => Axios.post(`/cart/add/${id}`, book)
   .then(((res) => {
-    if (res === 'update') {
+    console.log(res);
+    if (res.data === 'update') {
       const beforeState = getState().cart.cart;
-      const newCart = beforeState.map(singleBook => (singleBook.id === book.id
+      const newCart = beforeState.map(singleBook => ((singleBook.id === book.id)
         ? { ...singleBook, quantity: singleBook.quantity + book.quantity } : singleBook));
+        console.log(newCart)
       dispatch(setCart(newCart));
-    } else if (res === 'add') {
+    } else if (res.data === 'add') {
       dispatch(addCart(book));
     }
   }));
@@ -96,12 +107,42 @@ export const noUserAddCart = book => (dispatch, getState) => {
 };
 
 
-export const userRemoveCart = (book, id) => (dispatch, getState) => Axios.post(`/cart/${id}`, book)
-  .then(() => {
+export const userRemoveCart = (book, id) => (dispatch, getState) => {
+  if (id) {
+    Axios.post(`/cart/remove/${id}`, book)
+      .then(() => {
+        const beforeState = getState().cart.cart;
+        const newCart = beforeState.filter(singleBook => singleBook.id !== book.id);
+        return dispatch(setCart(newCart));
+      });
+  } else {
+    console.log('BOOK', book);
     const beforeState = getState().cart.cart;
-    const newCart = beforeState.filter(singleBook => singleBook.id !== book.id);
-    dispatch(setCart(newCart));
-  });
+    const newCart = beforeState.filter(singleBook => singleBook.id != book);
+    console.log(newCart);
+    dispatch(setCart(newCart))
+    localStorage.setItem('Carrito', JSON.stringify(getState().cart));
+  }
+};
 
 export const userCleanCart = id => dispatch => Axios.post(`/cart/clean/${id}`)
   .then(() => dispatch(setCart([])));
+
+
+// Comments
+
+const setComments = function setComments(comments) {
+  return {
+    type: SET_COMMENTS,
+    comments,
+  };
+};
+
+export const setComment = (comment, rating, id, bookId) => Axios.post(`/comments/${id}`, {
+  content: comment,
+  rating,
+  bookId,
+});
+
+export const fetchComments = id => dispatch => Axios.get(`/comments/${id}`)
+  .then(comments => dispatch(setComments(comments.data)));

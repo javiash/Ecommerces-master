@@ -24,7 +24,6 @@ body {
   grid-template-columns: 1fr 1fr 1fr 1fr;
   align-items: center;
   grid-template-rows: auto;
-  text-align: center;
   grid-template-areas:
     "sidebar "
     "sidebar"
@@ -108,7 +107,6 @@ footer .progress-bar {
 .bookContainer {
   width: 95%;
   margin: auto;
-  text-align: center;
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
   grid-gap: 10px;

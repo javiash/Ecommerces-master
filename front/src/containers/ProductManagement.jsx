@@ -1,3 +1,7 @@
+/* eslint-disable no-undef */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable guard-for-in */
 /* eslint-disable class-methods-use-this */
 
 import React from 'react';
@@ -5,9 +9,10 @@ import {
   Row, Col, Tab, Nav,
 } from 'react-bootstrap';
 import Axios from 'axios';
-import CreateArticle from '../components/CreateArticle.jsx';
-import EditArticle from '../components/EditArticle.jsx';
-import CreateCategory from '../components/CreateCategory.jsx';
+import { Link } from 'react-router-dom';
+import CreateArticle from '../components/CreateArticle';
+import EditArticle from '../components/EditArticle';
+import CreateCategory from '../components/CreateCategory';
 
 
 class ProductManagement extends React.Component {
@@ -32,18 +37,15 @@ class ProductManagement extends React.Component {
       stock: parseInt(e.target.elements[7].value, 10),
       sold: 0,
     };
-    for (let i in newBookData) {
+    for (const i in newBookData) {
       if (newBookData[i] === '') {
         this.setState({ error: true });
-        alert('ERROR: Por favor chequee el campo "' + i + '" esten completos!');
-        console.log('es vacio el ', i);
+        alert(`ERROR: Por favor chequee el campo "${i}" esten completos!`);
       }
       if (!newBookData.price || !newBookDatastock) {
-        console.log('son nulos!!');
         this.setState({ error: true });
       }
       if (this.state.error === false) {
-        console.log('llegue hasta acá', newBookData);
         Axios.post('/singlebook/create', newBookData)
           .then(res => console.log(res));
       }
@@ -57,6 +59,9 @@ class ProductManagement extends React.Component {
           <Row>
             <Col sm={3}>
               <Nav variant="pills" className="flex-column">
+                <Nav.Item>
+                  <Link to="/admin">Go back</Link>
+                </Nav.Item>
                 <Nav.Item>
                   <Nav.Link eventKey="first">Create Product</Nav.Link>
                 </Nav.Item>

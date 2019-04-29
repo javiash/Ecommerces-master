@@ -1,16 +1,11 @@
 import React from 'react';
 
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import {
-  setShowModal,
-  fetchLogin,
-  fetchUser,
+  Form, Button, Container, Row, Col,
+} from 'react-bootstrap/Form';
+import { connect } from 'react-redux';
+import { withRouter, Link } from 'react-router-dom';
+import {
   setLogin,
 } from '../store/actions/actions';
 
@@ -23,8 +18,8 @@ class Profile extends React.Component {
 
   submitHandler(e) {
     event.preventDefault();
-    console.log(e)
-  };
+    console.log(e);
+  }
 
   render() {
     return (
@@ -48,7 +43,7 @@ class Profile extends React.Component {
                   <a className="nav-link" href="/history">History</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/admin">Admin Panel</a>
+                  <Link to="/admin">Admin Panel</Link>
                 </li>
               </ul>
             </div>

@@ -18,15 +18,23 @@ router.post('/newbook', (req, res) => {
 
 
 router.get('/:id', (req, res) => {
-  Cart.findOne({ where: { userId: req.params.id } })
+  Cart.findAll({ include: [{model: Book, where: { userId: req.params.id }}]})
     .then((cart) => {
       res.send(cart)
     }
     )
 })
 
+// router.get('/:id', (req, res) => {
+//   Cart.findAll({ where: { userId: req.params.id }, include: [Book]})
+//     .then((cart) => {
+//       console.log('CARRRRO')
+//       res.send(cart)
+//     }
+//     )
+// })
+
 router.post('/new/:id', (req, res) => {
-  console.log(req.body)
   if (req.body.length != 0) {
     req.body.map(book => {
       Cart.create({
@@ -34,11 +42,9 @@ router.post('/new/:id', (req, res) => {
         quantity: book.quantity,
         bookId: book.id,
       })
-    })
-      .then(() => {
-        res.send('ok')
-      });
-  }
+      })
+    }
+    res.send('ok')
 });
 
 
@@ -50,17 +56,19 @@ router.post('/clean/:id', (req, res) => {
 router.post('/add/:id', (req, res) => {
   Cart.findAll({ where: { userId: req.params.id } })
     .then(oneCart => {
-      if (oneCart.some(e => e.id === req.body.id)) {
-        oneCart.map(singleBook => {
-          if (singleBook.id === req.body.id) {
+      if (oneCart.some(e => e.bookId === req.body.id)) {
+        console.log('ACTUALIZO')
+        oneCart.map((singleBook) => {
+          if (singleBook.bookId === req.body.id) {
             Cart.update(
               { quantity: singleBook.quantity + req.body.quantity },
-              { where: { id: singleBook.id } }
+              { where: { bookId: singleBook.bookId } }
             )
               .then(() => res.send('update'))
           }
         })
       } else {
+        console.log('AGREGO')
         Cart.create({
           userId: req.params.id,
           bookId: req.body.id,
@@ -69,6 +77,13 @@ router.post('/add/:id', (req, res) => {
           .then(() => res.send('add'))
       }
     })
+})
+
+router.post('/remove/:id', (req, res) => {
+  console.log(req.body)
+  Cart.destroy({where: {userId: req.params.id, bookId: req.body.book.id}})
+  console.log('borrado')
+  .then(() => res.send('erase'))
 })
 
 module.exports = router;

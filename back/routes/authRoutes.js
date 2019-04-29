@@ -63,19 +63,4 @@ router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
 });
 
 
-
-router.post('/com', (req, res) => {
-  Comments.create({
-    content: 'chau',
-    rating: 3,
-  })
-    .then(comment => {
-      console.log(comment)
-      comment.setFrom(1)
-      comment.setRef(1)
-      res.send('ok')
-    })
-})
-
-
 module.exports = router;

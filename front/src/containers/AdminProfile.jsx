@@ -1,17 +1,12 @@
+/* eslint-disable react/prefer-stateless-function */
 
 import React from 'react';
-import { Button, ButtonGroup, Jumbotron, Row, Col, Container } from 'react-bootstrap';
+import {
+  Button, ButtonGroup, Jumbotron, Row, Col, Container,
+} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 class AdminProfile extends React.Component {
-  constructor(props) {
-    super(props);
-
-  }
-
-
-
-
   render() {
     return (
       <div className="adminPanel">
@@ -19,11 +14,9 @@ class AdminProfile extends React.Component {
           <Row className="d-flex p-2">
             <Col>
               <ButtonGroup vertical>
-
-                <Button href="/admin/productManagement">Product management</Button>
-                <Button href="/admin/userManagement">User management</Button>
-                <Button href="/admin/orderManagement">Order management</Button>
-
+                <Link to="/admin/productManagement/"><Button>Product management</Button></Link>
+                <Link to="/admin/userManagement"><Button>User management</Button></Link>
+                <Link to="/admin/orderManagement"><Button>Order management</Button></Link>
               </ButtonGroup>
             </Col>
             <Col>
